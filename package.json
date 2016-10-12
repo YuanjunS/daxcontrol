@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "prestart": "npm run compileFrontend && npm run compileBackend",
+    "postinstall": "mkdir ./public/build",
+    "compileBackend": "tsc",
+    "compileFrontend": "browserify public/javascripts/index-app.ts -p [ tsify ] > public/build/app.js --debug"
   },
   "dependencies": {
     "@types/body-parser": "0.0.33",
@@ -20,6 +24,8 @@
     "morgan": "~1.7.0",
     "node-sass-middleware": "0.8.0",
     "serve-favicon": "~2.3.0",
-    "typescript": "~2.0.3"
+    "typescript": "~2.0.3",
+    "browserify": "~13.1.0",
+    "tsify": "~1.0.5"
   }
 }
