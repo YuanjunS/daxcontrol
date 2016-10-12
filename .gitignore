@@ -3,6 +3,7 @@
 *.js
 *.css
 *.map
+public/build
 
 ### Webstorm dir
 .idea
