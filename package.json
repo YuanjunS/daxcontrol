@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "prestart": "npm run compileFrontend && npm run compileBackend",
-    "postinstall": "mkdir ./public/build",
+    "postinstall": "node scripts/install.js",
     "compileBackend": "tsc",
     "compileFrontend": "browserify public/javascripts/index-app.ts -p [ tsify ] > public/build/app.js --debug"
   },
@@ -26,6 +26,7 @@
     "serve-favicon": "~2.3.0",
     "typescript": "~2.0.3",
     "browserify": "~13.1.0",
-    "tsify": "~1.0.5"
+    "tsify": "~1.0.5",
+    "mkdirp": "~0.5.1"
   }
 }
