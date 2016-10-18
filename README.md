@@ -22,6 +22,7 @@ The debug view is reachable via `server-ip:3000/debug`.
 1. Load the root folder in WebStorm and open the *Project* tab.
 2. Right-click on `package.json` and choose *Run 'npm install'*.
 3. Open the settings menu and navigate to *TypeScript* under *Languages & Frameworks*.
+    3.1 Set manually the typescript version (`node_modules -> typescript -> lib`)
     3.1 Check *Enable TypeScript compiler*.
     3.2 Check *Use tsconfig.json*.
 4. Right-click on `package.json` and choose *Show npm scripts*.
