@@ -1,0 +1,116 @@
+
+<html>  
+<head>  
+	<meta charset="utf-8">  
+	<title>饼状图</title>  
+</head> 
+<style>
+.tooltip{
+     font-family: simsun;
+     font-size: 14px;
+     width: 120;
+     height: auto;
+     position: absolute;
+     text-align: center;
+     border-style: solid; 
+     border-width: 1px;
+     background-color: white;
+     border-radius: 5px;
+  }
+
+</style>
+
+<body>  
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>  
+	<script>
+ 	
+ 	var width = 400;
+ 	var height = 400;
+
+ 	var svg = d3.select("body")
+ 				.append("svg")
+ 				.attr("width",width)
+ 				.attr("height",height);
+
+ 	var dataset = [ ["A",30] ,["B",10] ,["C", 43] ,["D",55] , ["E",13] ];
+
+ 	var pie = d3.layout.pie()
+                .value(function(d){return d[1]});// 布局
+
+ 	var piedata = pie(dataset);//输出的是转化后的比例
+
+ 	var outerRadius =  150;// 外半径
+ 	var innerRadius = 0;//不为0的话，中间有空白
+
+ 	var arc = d3.svg.arc()//弧生成器
+ 				.innerRadius(innerRadius)
+ 				.outerRadius(outerRadius);
+
+    var color = d3.scale.category10();
+ 	
+
+ 	var arcs = svg.selectAll("g")
+                .data(piedata)
+                .enter()
+                .append("g")
+                .attr("transform","translate("+ (width/2) +","+ (width/2) +")");
+
+    arcs.append("path")
+    	.attr("fill",function(d,i){
+    		return color(i);
+    	})
+		.attr("d",function(d){
+			return arc(d);
+		});
+
+	
+
+	arcs.append("text")
+    .attr("transform",function(d){
+        return "translate(" + arc.centroid(d) + ")";
+    })
+    .attr("text-anchor","middle")
+    .text(function(d){
+        return d.data;
+    });
+
+    console.log(dataset);
+    console.log(piedata);
+
+    var tooltip = d3.select("body")
+                            .append("div")
+                            .attr("class","tooltip")
+                            .style("opacity",0.0);
+        
+        arcs.on("mouseover",function(d){
+                /*
+                鼠标移入时，
+                （1）通过 selection.html() 来更改提示框的文字
+                （2）通过更改样式 left 和 top 来设定提示框的位置
+                （3）设定提示框的透明度为1.0（完全不透明）
+                */
+                
+                tooltip.html("The percent of"+d.data[0] + "<br />" + d.data[1] + "%")
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY + 20) + "px")
+                    .style("opacity",1.0);
+            })
+            .on("mousemove",function(d){
+                /* 鼠标移动时，更改样式 left 和 top 来改变提示框的位置 */
+                
+                tooltip.style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY + 20) + "px");
+            })
+            .on("mouseout",function(d){
+                /* 鼠标移出时，将透明度设定为0.0（完全透明）*/
+                
+                tooltip.style("opacity",0.0);
+            });
+    </script>
+</body>
+</html>
+
+
+
+
+
