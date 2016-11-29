@@ -4,130 +4,138 @@
 ///<reference path="../../scripts/d3.d.ts" />
 "use strict"
  module Chart {
+     interface TestPieChartData {
+         VAST: number;
+         InfoVis:number;
+         SciVis:number;
+         name: string;
+     }
+
+     export class PieChart {
+         public element: d3.Selection<any>;
+
+         constructor(element: d3.Selection<any>) {
+             this.element = element;
+         }
 
 
+         public width = 600;
+         public height = 500;
+         public radius = Math.min(this.width, this.height) / 2;
+         //public color = d3.scale.category20();
+         //public outerRadius = 150;// 外半径
+         //public innerRadius = 0;//不为0的话，中间有空白
 
-    export class PieChart {
-        public element: d3.Selection<any>;
+         public render() {
+             var color = d3.scale.ordinal<string>()
+                 .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
-        constructor(element: d3.Selection<any>) {
-            this.element = element;
-        }
+             var arc = d3.svg.arc<d3.layout.pie.Arc<TestPieChartData>>()
+                 .outerRadius(this.radius - 10)
+                 .innerRadius(this.radius- 70);
 
+             var arc2 = d3.svg.arc<d3.layout.pie.Arc<TestPieChartData>>()
+                 .outerRadius(this.radius - 80)
+                 .innerRadius(this.radius - 140);
 
+             var arc3 = d3.svg.arc<d3.layout.pie.Arc<TestPieChartData>>()
+                 .outerRadius(this.radius - 150)
+                 .innerRadius(0);
 
-        public width = 500;
-        public height = 500;
-        public color= d3.scale.category10();
-        public outerRadius = 150;// 外半径
-        public innerRadius = 0;//不为0的话，中间有空白
+             var pie = d3.layout.pie<TestPieChartData>()
+                 .sort(null)
+                 .value(function (d) {
+                     return d.VAST;
+                 });
+             var pie2 = d3.layout.pie<TestPieChartData>()
+                 .sort(null)
+                 .value(function (d) {
+                     return d.InfoVis;
+                 });
+             var pie3 = d3.layout.pie<TestPieChartData>()
+                 .sort(null)
+                 .value(function (d) {
+                     return d.SciVis;
+                 });
+             var svg = d3.select("body").append("svg")
+                 .attr("width", this.width)
+                 .attr("height", this.height)
+                 .append("g")
+                 .attr("transform", "translate(" + this.width / 2 + "," + this.height / 2 + ")");
 
-        public render(dataset:any) {
-            var svg = d3.select("body")
-                .append('svg')
-                .attr('width', this.width)
-                .attr('height', this.height);
+             d3.csv("../data/dataPieChart.csv", d => ({VAST: +d['VAST'],InfoVis: +d['InfoVis'],SciVis: +d['SciVis'], name: d['name']}),
+                 function (error, data) {
+                 //console.log(this.d.data.name);
+                 var g = svg.selectAll(".arc")
+                     .data(pie(data))
+                     .enter().append("g")
+                     .attr("class", "arc");
 
+                 g.append("path")
+                     .attr("d", arc)
+                     .style("fill", function (d) {
+                         return color(d.data.name);
+                     });
 
-            var pie = d3.layout.pie();
-               /* .value(function (d) {
-                    return d[1]
-                });// 布局*/
+                 g.append("text")
+                     .attr("transform", function (d) {
+                         return "translate(" + arc.centroid(d) + ")";
+                     })
+                     .attr("dy", ".35em")
+                     .style("text-anchor", "middle")
+                     .text(function (d) {
+                         return d.data.name;
+                     });
+                 var g2 = svg.selectAll("arc")
+                     .data(pie2(data))
+                     .enter().append("g")
+                     .attr("class", "arc2");
 
-            var piedata = pie(dataset);//输出的是转化后的比例
+                 g2.append("path")
+                     .attr("d", arc2)
+                     .style("fill", function (d) {
+                         return color(d.data.name);
+                     });
 
+                 g2.append("text")
+                     .attr("transform", function (d) {
+                         return "translate(" + arc2.centroid(d) + ")";
+                     })
+                     .attr("dy", ".35em")
+                     .style("text-anchor", "middle")
+                     .text(function (d) {
+                         return d.data.name;
+                     });
+                 var g3 = svg.selectAll("arc")
+                     .data(pie3(data))
+                     .enter().append("g")
+                     .attr("class", "arc3");
 
-            var arc = d3.svg.arc()//弧生成器
-                .innerRadius(this.innerRadius)
-                .outerRadius(this.outerRadius);
+                 g3.append("path")
+                     .attr("d", arc3)
+                     .style("fill", function (d) {
+                         return color(d.data.name);
+                     });
 
-            var str=this.color.range();
+                 g3.append("text")
+                     .attr("transform", function (d) {
+                         return "translate(" + arc3.centroid(d) + ")";
+                     })
+                     .attr("dy", ".35em")
+                     .style("text-anchor", "middle")
+                     .text(function (d) {
+                         return d.data.name;
+                     });
 
-            var arcs = svg.selectAll("g")
-                .data(piedata)
-                .enter()
-                .append("g")
-                .attr("transform", "translate(" + (this.width / 2) + "," + (this.width / 2) + ")");
+             });
+         }
+     }
+ }
 
-            arcs.append("path")
-                .attr("fill", function (d, i) {
-                        return str[i];
-                    }
-                )
-                .attr("d", function (d) {
-                        return arc(d);
-                    }
-                );
-
-
-            arcs.append("text")
-                .attr("transform", function (d) {
-                        return "translate(" + arc.centroid(d) + ")";
-                    }
-                )
-                .attr("text-anchor", "middle")
-                .text(function (d) {
-                        return d.data;
-                    }
-                );
-            var str=this.color.range();
-            console.log(str[1]);
-            console.log(dataset);
-
-            console.log(piedata);
-
-           /* var
-             tooltip = d3.select("body")
-             .append("div")
-             .attr("class", "tooltip")
-             .style("opacity", 0.0);
-
-             arcs
-             .on(
-             "mouseover"
-             ,
-             function (d) {
-             /*
-             鼠标移入时，
-             （1）通过 selection.html() 来更改提示框的文字
-             （2）通过更改样式 left 和 top 来设定提示框的位置
-             （3）设定提示框的透明度为1.0（完全不透明）
-
-
-             tooltip.html("The percent of" + d.data[0] + "<br />" + d.data[1] + "%")
-             .style("left", (d3.event.pageX) + "px")
-             .style("top", (d3.event.pageY + 20) + "px")
-             .style("opacity", 1.0);
-             }
-             )
-             .on(
-             "mousemove"
-             ,
-             function (d) {
-             /* 鼠标移动时，更改样式 left 和 top 来改变提示框的位置
-
-             tooltip.style("left", (d3.event.pageX) + "px")
-             .style("top", (d3.event.pageY + 20) + "px");
-             }
-             )
-             .on(
-             "mouseout"
-             ,
-             function (d) {
-             /* 鼠标移出时，将透明度设定为0.0（完全透明)
-
-             tooltip.style("opacity", 0.0);
-             }
-             );
-             }*/
-        }
-    }
-}
-var data = [30,10,43,55,13];
 document.addEventListener('DOMContentLoaded', function () {
 
      var piechart1 = new Chart.PieChart(d3.select('#piechart'));
 
-     piechart1.render(data);
+     piechart1.render();
 
 });

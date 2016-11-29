@@ -15,7 +15,7 @@ module Chart {
 
         public render() {
             var margin = {top: 20, right: 20, bottom: 30, left: 40},
-                width = 750 - margin.left - margin.right,
+                width = 650 - margin.left - margin.right,
                 height = 500 - margin.top - margin.bottom;
 
             var x = d3.scale.ordinal()
@@ -79,7 +79,7 @@ module Chart {
                     .attr("y", 6)
                     .attr("dy", ".71em")
                     .style("text-anchor", "end")
-                    .text("PaperNumber");
+                    //.text("PaperNumber");
 
                 var state = svg.selectAll(".state")
                     .data(data)
