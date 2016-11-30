@@ -14,8 +14,8 @@ module Chart {
         }
 
         public render() {
-            var margin = {top: 100, right: 20, bottom: 30, left: 50},
-                width = 600 - margin.left - margin.right,
+            var margin = {top: 100, right: 50, bottom: 30, left: 50},
+                width = 650 - margin.left - margin.right,
                 height = 500 - margin.top - margin.bottom;
 
             var parseDate = d3.time.format("%d-%b-%y").parse;
@@ -106,6 +106,7 @@ module Chart {
                         .data(conferences)
                         .enter().append("g")
                         .attr("class", "conference");
+
 
                     // 添加path元素，并通过line()计算出值来赋值
                     conference.append("path")

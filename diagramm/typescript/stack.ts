@@ -19,7 +19,7 @@ module Chart {
                 height = 500 - margin.top - margin.bottom;
 
             var x = d3.scale.ordinal()
-                .rangeRoundBands([0, width], .1);
+               .rangeRoundBands([0, width],.1);
 
             var y = d3.scale.linear()
                 .rangeRound([height, 0]);
@@ -29,6 +29,7 @@ module Chart {
 
             var xAxis = d3.svg.axis()
                 .scale(x)
+
                 .orient("bottom");
 
             var yAxis = d3.svg.axis()
@@ -36,15 +37,26 @@ module Chart {
                 .orient("left")
                 .tickFormat(d3.format(".2s"));
 
+            /*var zoom = d3.behavior.zoom()
+                .x(x)
+                .y(y)
+                .scaleExtent([1, 10])
+                .on("zoom", zoomed);
+
+            function zoomed() {
+                svg.select(".x.axis").call(xAxis);
+                svg.select(".y.axis").call(yAxis);
+            }*/
             var svg = d3.select("body").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                //.call(zoom);
 
-            d3.csv("../data/data.csv", function (error: any, data: any) {
+            d3.csv("../data/Line_Stack.csv", function (error: any, data: any) {
                 color.domain(d3.keys(data[0]).filter(function (key) {
-                    return key !== "State";
+                    return key !== "year";
                 }));
 
                 data.forEach(function (d: any) {
@@ -60,7 +72,7 @@ module Chart {
                 });
 
                 x.domain(data.map(function (d: any) {
-                    return d.State;
+                    return d.year;
                 }));
                 y.domain([0, d3.max(data, function (d: { total: number }) {
                     return d.total;
@@ -69,24 +81,27 @@ module Chart {
                 svg.append("g")
                     .attr("class", "x axis")
                     .attr("transform", "translate(0," + height + ")")
+
                     .call(xAxis);
+                svg.select(".x.axis")
+                    .style("font-size","8px");
 
                 svg.append("g")
                     .attr("class", "y axis")
                     .call(yAxis)
                     .append("text")
                     .attr("transform", "rotate(-90)")
-                    .attr("y", 6)
+                    .attr("y", 100)
                     .attr("dy", ".71em")
                     .style("text-anchor", "end")
                     //.text("PaperNumber");
 
-                var state = svg.selectAll(".state")
+                var state = svg.selectAll(".year")
                     .data(data)
                     .enter().append("g")
                     .attr("class", "g")
                     .attr("transform", function (d: any) {
-                        return "translate(" + x(d.State) + ",0)";
+                        return "translate(" + x(d.year) + ",0)";
                     });
 
                 state.selectAll("rect")
