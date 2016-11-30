@@ -55,7 +55,7 @@ module Chart {
                 .interpolate("linear");
 
             d3.csv(
-                "../data/data2.csv",
+                "../data/Line_Stack.csv",
 
                 function (error: any, data: any) {
 
