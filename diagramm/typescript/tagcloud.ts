@@ -5,6 +5,12 @@
 "use strict"
 
 module Chart{
+    interface T{
+        keyword?:string[];
+        text?:any;
+        size?:number;
+
+    }
     export class TagCloud{
 
         public element: d3.Selection<any>;
@@ -13,8 +19,8 @@ module Chart{
         }
 
         public render(){
-             function cloud() {
-                var size = [256, 256],
+            function cloud()  {
+                var size = [150, 150],
                     text = cloudText,
                     font = cloudFont,
                     fontSize = cloudFontSize,
@@ -409,7 +415,8 @@ module Chart{
             c.fillStyle = c.strokeStyle = "red";
             c.textAlign = "center";
 
-            exports.cloud = cloud;
+            //exports.cloud = cloud;
+
 
             var fill = d3.scale.category20();
             var keyword = [],
@@ -420,7 +427,8 @@ module Chart{
                 data.forEach( function (d:any) {
                     keyword.push(d.conference);
                 });
-                var cloud1 = d3.layout.cloud().size([500, 500])
+                 d3.layout.cloud()
+                     .size([500, 500])
                     .words(keyword.map(function(d) {
                         return {text: d, size: 10 + Math.random() * 90};
                     }))
@@ -431,19 +439,19 @@ module Chart{
                     .start();
             });
 
-            var color = d3.scale.linear()
-                .domain([0,1,2,3,4,5,6,10,15,20,100])
+            var color = d3.scale.linear<string>()
+                .domain([0,1,2,3,4,5,6,10,15,20,50])
                 .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
 
             function draw(words) {
                 d3.select("body").append("svg")
-                    .attr("width", 850)
-                    .attr("height", 350)
+                    .attr("width", 600)
+                    .attr("height", 600)
                     .attr("class", "wordcloud")
                     .append("g")
                     // without the transform, words words would get cutoff to the left and top, they would
                     // appear outside of the SVG area
-                    .attr("transform", "translate(320,200)")
+                    .attr("transform", "translate(300,300)")
                     .selectAll("text")
                     .data(words)
                     .enter().append("text")
@@ -452,9 +460,17 @@ module Chart{
                     .attr("transform", function(d:any) {
                         return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
                     })
+                    .attr("text-anchor", "middle")
                     .text(function(d:any) { return d.text; });
             }
         }
     }
 
 }
+document.addEventListener('DOMContentLoaded', function () {
+
+    var tagcloud = new Chart.TagCloud(d3.select('#tagcloud'));
+
+    tagcloud.render();
+
+});
