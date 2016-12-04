@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>4Diagramm</title>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+	<style>
+		#menuPieChart {top:200px;right:400px;}
+		#piechartbutton{text-indent:13.5%}
+
+	</style>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$( function() {
+			$( "#menuPieChart" ).draggable();
+		} );
+	</script>
+
+	<script type="text/javascript">
+		function Show_Hidden(trid){
+			if(trid.style.display=="block"){
+				trid.style.display='none';
+			}else{
+				trid.style.display='block';
+			}
+		}
+	</script>
+
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="../public/stylesheets/materialize.min.css"  media="screen,projection"/>
+	<script src="../public/javascripts/materialize.min.js"></script>
+
+	<script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+	<script src="../scripts/d3.cloud.js"></script>
+
+	<script src="typescript/pie_chart.js"></script>
+	<script src="typescript/stack.js"></script>
+	<script src="typescript/multiline.js"></script>
+	<script src="typescript/tagcloud.js"></script>
+
+	<script src="typescript/try.js"></script>
+
+
+
+
+</head>
+<body>
+
+
+
+
+<div id="menuPieChart" class="fixed-action-btn horizontal click-to-toggle" style="display:none;">
+	<a class="btn-floating btn-large red">
+		<i class="material-icons">menu</i>
+	</a>
+	<ul>
+		<li><a class="btn-floating red" ><i class="material-icons" onclick = zoom()>search</i></a></li>
+		<li><a class="btn-floating yellow darken-1"><i class="material-icon">filter</i></a></li>
+		<li><a class="btn-floating green "><i class="material-icons">publish</i></a></li>
+		<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+	</ul>
+</div>
+
+		<div id="piechartandbutton" >
+			<h3 id="piechartbutton" onclick=Show_Hidden(menuPieChart)>Ring Chart</h3>
+			<div id="piechart"  ></div>
+		</div>
+
+
+
+		<div id="stack"></div>
+
+	<div id="mult"></div>
+	<div id="tagcloud"></div>
+</body>
+</html>
+
+
+
+
