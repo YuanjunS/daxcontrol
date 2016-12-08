@@ -7,6 +7,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 declare namespace d3 {
+
     /**
      * The current version of D3.js.
      */
@@ -217,6 +218,7 @@ declare namespace d3 {
              *
              * @param name the element name to append. May be prefixed (see d3.ns.prefix).
              */
+            json(value:(datum:Datum, index:number, outerIndex: number)=> string): Selection<Datum>;
             append(name: string): Selection<Datum>;
 
             /**
@@ -925,6 +927,10 @@ declare namespace d3 {
     namespace timer {
         export function flush(): void;
     }
+    interface Event extends KeyboardEvent, MouseEvent {
+        translate:[number,number];
+        scale:number;
+    }
 
     interface BaseEvent {
         type: string;
@@ -952,7 +958,8 @@ declare namespace d3 {
     /**
      * The current event's value. Use this variable in a handler registered with `selection.on`.
      */
-    export var event: Event | BaseEvent;
+    export var event: Event;
+    export var zoomevent:ZoomEvent;
 
     /**
      * Returns the x and y coordinates of the mouse relative to the provided container element, using d3.event for the mouse's position on the page.
@@ -2381,9 +2388,9 @@ declare namespace d3 {
             }
         }
 
-        export function arc(): Arc<arc.Arc>;
+        export function arc(d:any): Arc<arc.Arc>;
         export function arc<T>(): Arc<T>;
-        //export function arc(d:any):any;
+        //export function arc(d: T): Arc<T>;
 
         namespace arc {
             interface Arc {
@@ -2764,6 +2771,76 @@ declare namespace d3 {
     }
 
     namespace layout {
+        export function cloud(): Cloud<cloud.Word>;
+        export function cloud<T extends cloud.Word>(): Cloud<T>;
+
+        namespace cloud {
+            interface Word {
+                text?: string;
+                font?: string;
+                style?: string;
+                weight?: string | number;
+                rotate?: number;
+                size?: number;
+                padding?: number;
+                x?: number;
+                y?: number;
+            }
+        }
+
+        interface Cloud<T extends cloud.Word> {
+            start(): Cloud<T>;
+            stop(): Cloud<T>;
+
+            timeInterval(): number;
+            timeInterval(interval: number): Cloud<T>;
+            words(): T[];
+            words(words: T[]): Cloud<T>;
+
+            size(): [number, number];
+            size(size: [number, number]): Cloud<T>;
+
+            font(): (datum: T, index: number) => string;
+            font(font: string): Cloud<T>;
+            font(font: (datum: T, index: number) => string): Cloud<T>;
+
+            fontStyle(): (datum: T, index: number) => string;
+            fontStyle(style: string): Cloud<T>;
+            fontStyle(style: (datum: T, index: number) => string): Cloud<T>;
+
+            fontWeight(): (datum: T, index: number) => string | number;
+            fontWeight(weight: string | number): Cloud<T>;
+            fontWeight(weight: (datum: T, index: number) => string | number): Cloud<T>;
+
+            rotate(): (datum: T, index: number) => number;
+            rotate(rotate: number): Cloud<T>;
+            rotate(rotate: (datum: T, index: number) => number): Cloud<T>;
+
+            text(): (datum: T, index: number) => string;
+            text(text: string): Cloud<T>;
+            text(text: (datum: T, index: number) => string): Cloud<T>;
+
+            spiral(): (size: number) => (t: number) => [number, number];
+            spiral(name: string): Cloud<T>;
+            spiral(spiral: (size: number) => (t: number) => [number, number]): Cloud<T>;
+
+            fontSize(): (datum: T, index: number) => number;
+            fontSize(size: number): Cloud<T>;
+            fontSize(size: (datum: T, index: number) => number): Cloud<T>;
+
+            padding(): (datum: T, index: number) => number;
+            padding(padding: number): Cloud<T>;
+            padding(padding: (datum: T, index: number) => number): Cloud<T>;
+
+            on(type: "word", listener: (word: T) => void): Cloud<T>;
+            on(type: "end", listener: (tags: T[], bounds: { x: number; y: number }[]) => void): Cloud<T>;
+            on(type: string, listener: (...args: any[]) => void): Cloud<T>;
+
+            on(type: "word"): (word: T) => void;
+            on(type: "end"): (tags: T[], bounds: { x: number; y: number }[]) => void;
+            on(type: string): (...args: any[]) => void;
+        }
+
         export function bundle(): Bundle<bundle.Node>;
         export function bundle<T extends bundle.Node>(): Bundle<T>
 

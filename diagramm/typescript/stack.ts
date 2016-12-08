@@ -37,22 +37,21 @@ module Chart {
                 .orient("left")
                 .tickFormat(d3.format(".2s"));
 
-            /*var zoom = d3.behavior.zoom()
-                .x(x)
-                .y(y)
-                .scaleExtent([1, 10])
-                .on("zoom", zoomed);
+           // var zoom = d3.behavior.zoom()
+                //.x(x)
+                //.y(y)
+               // .scaleExtent([1, 10])
+                //.on("zoom", zoomed);
 
-            function zoomed() {
-                svg.select(".x.axis").call(xAxis);
-                svg.select(".y.axis").call(yAxis);
-            }*/
+
             var svg = d3.select("body").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-                //.call(zoom);
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                .call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom",function(){
+                    svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+                }));
 
             d3.csv("../data/Line_Stack.csv", function (error: any, data: any) {
                 color.domain(d3.keys(data[0]).filter(function (key) {
