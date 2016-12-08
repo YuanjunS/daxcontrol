@@ -59,6 +59,7 @@
                  .value(function (d) {
                      return d.SciVis;
                  });
+             
 
              var svg = d3.select("body").append("svg")
                  .attr("width", this.width)
@@ -66,9 +67,6 @@
                  .attr("height", this.height)
                  .append("g")
                  .attr("transform", "translate(" + this.width / 2 + "," + this.height / 2 + ")")
-                 .call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom",function(){
-                     svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
-                 }))
                  .append("g");
 
 
@@ -145,9 +143,46 @@
                      //});
 
                  });
+             /* zoom behavior with buttons*/
+             var zoom = d3.behavior.zoom()
+                 .scaleExtent([0, 8])
+                 .center([this.width / 2, this.height / 2])
+                 .size([this.width / 2, this.height / 2])
+                 .on("zoom", zoomed);
+             svg.call(zoom);
+             function zoomed() {
+                 svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+             }
 
+             d3.selectAll("button[data-zoom-pie]")
+                 .on("click", clicked);
+
+             function clicked() {
+                 svg.call(zoom.event); // https://github.com/mbostock/d3/issues/2387
+
+                 // Record the coordinates (in data space) of the center (in screen space).
+                 var center0 = zoom.center(), translate0 = zoom.translate(), coordinates0 = coordinates(center0);
+                 zoom.scale(zoom.scale() * Math.pow(2, +this.getAttribute("data-zoom-pie")));
+
+                 // Translate back to the center.
+                 var center1 = point(coordinates0);
+                 zoom.translate([translate0[0] + center0[0] - center1[0], translate0[1] + center0[1] - center1[1]]);
+
+                 svg.transition().duration(400).call(zoom.event);
+             }
+
+             function coordinates(point) {
+                 var scale = zoom.scale(), translate = zoom.translate();
+                 return [(point[0] - translate[0]) / scale, (point[1] - translate[1]) / scale];
+             }
+
+             function point(coordinates) {
+                 var scale = zoom.scale(), translate = zoom.translate();
+                 return [coordinates[0] * scale + translate[0], coordinates[1] * scale + translate[1]];
+             }
+
+             /* dragable*/
          }
-
      }
  }
 
