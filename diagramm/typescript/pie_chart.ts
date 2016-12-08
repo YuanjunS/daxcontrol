@@ -4,6 +4,8 @@
 ///<reference path="../../scripts/d3.d.ts" />
 "use strict"
  module Chart {
+
+
      interface TestPieChartData {
          VAST: number;
          InfoVis:number;
@@ -32,7 +34,7 @@
 
              var arc = d3.svg.arc<d3.layout.pie.Arc<TestPieChartData>>()
                  .outerRadius(this.radius - 10)
-                 .innerRadius(this.radius- 70);
+                 .innerRadius(this.radius - 70);
 
              var arc2 = d3.svg.arc<d3.layout.pie.Arc<TestPieChartData>>()
                  .outerRadius(this.radius - 80)
@@ -57,78 +59,95 @@
                  .value(function (d) {
                      return d.SciVis;
                  });
+
              var svg = d3.select("body").append("svg")
                  .attr("width", this.width)
+                 .attr("id", "PieChartSVG")
                  .attr("height", this.height)
                  .append("g")
-                 .attr("transform", "translate(" + this.width / 2 + "," + this.height / 2 + ")");
+                 .attr("transform", "translate(" + this.width / 2 + "," + this.height / 2 + ")")
+                 .call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom",function(){
+                     svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+                 }))
+                 .append("g");
 
-             d3.csv("../data/dataPieChart.csv", d => ({VAST: +d['VAST'],InfoVis: +d['InfoVis'],SciVis: +d['SciVis'], name: d['name']}),
+
+             d3.csv("../data/dataPieChart.csv", d => ({
+                     VAST: +d['VAST'],
+                     InfoVis: +d['InfoVis'],
+                     SciVis: +d['SciVis'],
+                     name: d['name']
+                 }),
                  function (error, data) {
-                 //console.log(this.d.data.name);
-                 var g = svg.selectAll(".arc")
-                     .data(pie(data))
-                     .enter().append("g")
-                     .attr("class", "arc");
+                     //console.log(this.d.data.name);
+                     var g = svg.selectAll(".arc")
+                         .data(pie(data))
+                         .enter().append("g")
+                         .attr("class", "arc");
 
-                 g.append("path")
-                     .attr("d", arc)
-                     .style("fill", function (d) {
-                         return color(d.data.name);
-                     });
+                     g.append("path")
+                         .attr("d", arc)
+                         .style("fill", function (d) {
+                             return color(d.data.name);
+                         });
 
-                 g.append("text")
-                     .attr("transform", function (d) {
-                         return "translate(" + arc.centroid(d) + ")";
-                     })
-                     .attr("dy", ".35em")
-                     .style("text-anchor", "middle")
-                     .text(function (d) {
-                         return d.data.name;
-                     });
-                 var g2 = svg.selectAll("arc")
-                     .data(pie2(data))
-                     .enter().append("g")
-                     .attr("class", "arc2");
+                     g.append("text")
+                         .attr("transform", function (d) {
+                             return "translate(" + arc.centroid(d) + ")";
+                         })
+                         .attr("dy", ".35em")
+                         .style("text-anchor", "middle")
+                         .text(function (d) {
+                             return d.data.name;
+                         });
+                     var g2 = svg.selectAll("arc")
+                         .data(pie2(data))
+                         .enter().append("g")
+                         .attr("class", "arc2");
 
-                 g2.append("path")
-                     .attr("d", arc2)
-                     .style("fill", function (d) {
-                         return color(d.data.name);
-                     });
+                     g2.append("path")
+                         .attr("d", arc2)
+                         .style("fill", function (d) {
+                             return color(d.data.name);
+                         });
 
-                 g2.append("text")
-                     .attr("transform", function (d) {
-                         return "translate(" + arc2.centroid(d) + ")";
-                     })
-                     .attr("dy", ".35em")
-                     .style("text-anchor", "middle")
-                     .text(function (d) {
-                         return d.data.name;
-                     });
-                 var g3 = svg.selectAll("arc")
-                     .data(pie3(data))
-                     .enter().append("g")
-                     .attr("class", "arc3");
+                     g2.append("text")
+                         .attr("transform", function (d) {
+                             return "translate(" + arc2.centroid(d) + ")";
+                         })
+                         .attr("dy", ".35em")
+                         .style("text-anchor", "middle")
+                         .text(function (d) {
+                             return d.data.name;
+                         });
+                     var g3 = svg.selectAll("arc")
+                         .data(pie3(data))
+                         .enter().append("g")
+                         .attr("class", "arc3");
 
-                 g3.append("path")
-                     .attr("d", arc3)
-                     .style("fill", function (d) {
-                         return color(d.data.name);
-                     });
+                     g3.append("path")
+                         .attr("d", arc3)
+                         .style("fill", function (d) {
+                             return color(d.data.name);
+                         });
 
-                 g3.append("text")
-                     .attr("transform", function (d) {
-                         return "translate(" + arc3.centroid(d) + ")";
-                     })
-                     .attr("dy", ".35em")
-                     .style("text-anchor", "middle")
-                     .text(function (d) {
-                         return d.data.name;
-                     });
+                     g3.append("text")
+                         .attr("transform", function (d) {
+                             return "translate(" + arc3.centroid(d) + ")";
+                         })
+                         .attr("dy", ".35em")
+                         .style("text-anchor", "middle")
+                         .text(function (d) {
+                             return d.data.name;
+                         });
 
-             });
+
+                     //});
+
+                 });
+
          }
+
      }
  }
 

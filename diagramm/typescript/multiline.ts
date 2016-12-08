@@ -36,10 +36,19 @@ module Chart {
                 .scale(yScale)
                 .orient("left");
 
+            //var zoom = d3.behavior.zoom()
+               // .scaleExtent([1, 10])
+                //.on("zoom", zoomed);
+
+
+
             var svg = d3.select("body")
                 .append("svg")
                 .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom);
+                .attr("height", height + margin.top + margin.bottom)
+                .call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom",function(){
+                    g.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+                }));
 
             var g = svg.append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -138,6 +147,8 @@ module Chart {
                         .attr("fill","white");*/
                 }
             );
+
+
         }
     }
 }
