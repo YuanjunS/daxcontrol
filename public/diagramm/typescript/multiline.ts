@@ -36,19 +36,10 @@ module Chart {
                 .scale(yScale)
                 .orient("left");
 
-            //var zoom = d3.behavior.zoom()
-               // .scaleExtent([1, 10])
-                //.on("zoom", zoomed);
-
-
-
             var svg = d3.select("body")
                 .append("svg")
                 .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom",function(){
-                    g.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
-                }));
+                .attr("height", height + margin.top + margin.bottom);
 
             var g = svg.append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -147,7 +138,18 @@ module Chart {
                         .attr("fill","white");*/
                 }
             );
+            /* zoom function with button*/
+            var zoom = d3.behavior.zoom()
+                .scaleExtent([0, 8])
+                .center([width / 2, height / 2])
+                .size([width, height])
+                .on("zoom", zoomed);
 
+            function zoomed() {
+                g.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+            }
+
+            svg.call(zoom);
 
         }
     }
@@ -157,6 +159,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var mult = new Chart.Multiline(d3.select('#multiline'));
 
     mult.render();
+
+
 });
+
+
 
 

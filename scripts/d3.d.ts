@@ -930,6 +930,8 @@ declare namespace d3 {
     interface Event extends KeyboardEvent, MouseEvent {
         translate:[number,number];
         scale:number;
+        dx:any;
+        dy:any;
     }
 
     interface BaseEvent {
@@ -1895,6 +1897,7 @@ declare namespace d3 {
         }
 
         export function zoom<Datum>(): Zoom<Datum>;
+
 
         namespace zoom {
             interface Scale {

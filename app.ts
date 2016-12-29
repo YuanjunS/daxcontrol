@@ -26,9 +26,9 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname + 'data')));
-app.use(express.static(path.join(__dirname,'scripts')));
-app.use(express.static(path.join(__dirname,'diagramm')));
+//app.use(express.static(path.join(__dirname + 'data')));
+//app.use(express.static(path.join(__dirname,'scripts')));
+//app.use(express.static(path.join(__dirname,'diagramm')));
 app.use('/', indexRouter);
 app.use('/users', userRouter);
 

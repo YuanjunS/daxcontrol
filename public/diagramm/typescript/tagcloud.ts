@@ -461,10 +461,7 @@ module Chart{
                         return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
                     })
                     .attr("text-anchor", "middle")
-                    .text(function(d:any) { return d.text; })
-                    .call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom",function(){
-                        svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
-                    }));
+                    .text(function(d:any) { return d.text; });
             }
         }
     }

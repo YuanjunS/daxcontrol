@@ -1,5 +1,43 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  #menuPieChart.fixed-action-btn.horizontal.click-to-toggle(style='display:none;')
+    a.btn-floating.btn-large.red
+      i.material-icons menu
+    | &#x9;
+    ul
+      li
+        a.btn-floating.red
+          i.material-icons(onclick='Show_Hidden(ZoomPieChart)') backup
+      | &#x9;&#x9;&#x9;
+      #ZoomPieChart(style='display:none')
+        li
+          button.btn-floating.yellow.darken-1(data-zoom-pie='+0.5')
+            i.material-icon add
+          | &#x9;&#x9;
+          li
+            button.btn-floating.green(data-zoom-pie='-0.5')
+              i.material-icons delete
+      li
+        a.btn-floating.yellow.darken-1
+          i.material-icon filter
+      | &#x9;&#x9;
+      li
+        a.btn-floating.green
+          i.material-icons title
+      | &#x9;&#x9;
+      li
+        a.btn-floating.blue
+          i.material-icons settings
+  | &#x9;&#x9;
+  #piechartandbutton
+    h3#piechartbutton(onclick='Show_Hidden(menuPieChart)') Ring Chart
+    | &#x9;&#x9;&#x9;
+    #piechart
+  | &#x9;
+  #stack
+  | &#x9;
+  #multandbutton
+    #mult
+  | &#x9;
+  #tagcloud

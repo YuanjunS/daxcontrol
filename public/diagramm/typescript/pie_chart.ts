@@ -59,7 +59,7 @@
                  .value(function (d) {
                      return d.SciVis;
                  });
-             
+
 
              var svg = d3.select("body").append("svg")
                  .attr("width", this.width)
