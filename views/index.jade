@@ -1,43 +1,93 @@
+
 extends layout
 
+
+
+
 block content
-  #menuPieChart.fixed-action-btn.horizontal.click-to-toggle(style='display:none;')
-    a.btn-floating.btn-large.red
-      i.material-icons menu
-    | &#x9;
-    ul
-      li
-        a.btn-floating.red
-          i.material-icons(onclick='Show_Hidden(ZoomPieChart)') backup
-      | &#x9;&#x9;&#x9;
-      #ZoomPieChart(style='display:none')
+  script(src='diagramm/typescript/pie_chart.js')
+  | &#x9;
+  script(src='diagramm/typescript/stack.js')
+  | &#x9;
+  script(src='diagramm/typescript/multiline.js')
+  | &#x9;
+  script(src='diagramm/typescript/tagcloud.js')
+  | &#x9;
+  .container
+   // Top Navigation
+   .component
+     h2 DaXControl
+
+     // Start Nav Structure
+
+     button#cn-button.cn-button Menu
+     | &#x9;&#x9;&#x9;&#x9;
+     #cn-wrapper.cn-wrapper
+       ul
+         li
+           a(href='#')
+             span About
+         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+         li
+           a(href='#')
+             span Filter
+         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+         li
+           a(href='#')
+             span Zoom
+         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+         li
+           a(href='#')
+             span Search
+         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+        //  End of Nav Structure
+
+   script(src='javascripts/polyfills.js')
+   | &#x9;&#x9;
+   script(src='javascripts/demo2.js')
+   | &#x9;&#x9;
+   // For the demo ad only
+   script(src='http://tympanus.net/codrops/adpacks/demoad.js')
+   | &#x9;&#x9;
+  #menuPieChart.fixed-action-btn.fab-backdrop.click-to-toggle(style='display:none;')
+      a.btn-floating.btn-large.red
+        i.material-icons menu
+      | &#x9;
+      #icons
+      ul
         li
-          button.btn-floating.yellow.darken-1(data-zoom-pie='+0.5')
-            i.material-icon add
-          | &#x9;&#x9;
+          a.btn-floating.red
+            i.material-icons(onclick='Show_Hidden(ZoomPieChart)') backup
+        | &#x9;&#x9;&#x9;
+        #ZoomPieChart(style='display:none')
           li
-            button.btn-floating.green(data-zoom-pie='-0.5')
-              i.material-icons delete
-      li
-        a.btn-floating.yellow.darken-1
-          i.material-icon filter
-      | &#x9;&#x9;
-      li
-        a.btn-floating.green
-          i.material-icons title
-      | &#x9;&#x9;
-      li
-        a.btn-floating.blue
-          i.material-icons settings
-  | &#x9;&#x9;
+            button.btn-floating.yellow.darken-1(data-zoom-pie='+0.25')
+              i.material-icon add
+            | &#x9;&#x9;
+            li
+              button.btn-floating.green(data-zoom-pie='-0.25')
+                i.material-icons delete
+        li
+          a.btn-floating.yellow.darken-1
+            i.material-icon filter
+        | &#x9;&#x9;
+        li
+          a.btn-floating.green
+            i.material-icons title
+        | &#x9;&#x9;
+        li
+          a.btn-floating.blue
+            i.material-icons settings
+            | &#x9;
+    | &#x9;&#x9;
   #piechartandbutton
-    h3#piechartbutton(onclick='Show_Hidden(menuPieChart)') Ring Chart
-    | &#x9;&#x9;&#x9;
-    #piechart
-  | &#x9;
+      h3#piechartbutton(onclick='Show_Hidden(menuPieChart)') Ring Chart
+      | &#x9;&#x9;&#x9;
+      #piechart
+    | &#x9;
   #stack
-  | &#x9;
-  #multandbutton
-    #mult
-  | &#x9;
-  #tagcloud
+    | &#x9;
+    #multandbutton
+      #mult
+    | &#x9;
+    #tagcloud

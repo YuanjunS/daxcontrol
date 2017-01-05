@@ -4,6 +4,16 @@ head
   | &#x9;
   meta(name='viewport', content='width=device-width, initial-scale=1')
   | &#x9;
+  meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+  | &#x9;&#x9;
+  meta(name='description', content='Circular Navigation Styles - Building a Circular Navigation with CSS Transforms | Codrops ')
+  | &#x9;&#x9;
+  meta(name='keywords', content='css transforms, circular navigation, round navigation, circular menu, tutorial')
+  | &#x9;&#x9;
+  meta(name='author', content='Sara Soueidan for Codrops')
+  | &#x9;&#x9;
+  link(rel='shortcut icon', href='../favicon.ico')
+  | &#x9;&#x9;
   title 4Diagramm
   | &#x9;
   link(rel='stylesheet', href='http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
@@ -17,6 +27,7 @@ head
     #piechartbutton {
       text-indent: 13.5%
     }
+    #icons
   | &#x9;
   script(src='https://code.jquery.com/jquery-1.12.4.js')
   | &#x9;
@@ -24,7 +35,8 @@ head
   | &#x9;
   script.
     $(function () {
-      $("#menuPieChart").draggable();
+      //$("#menuPieChart").draggable();
+      $("#icons").draggable();
     });
   | &#x9;
   script(type='text/javascript').
@@ -40,20 +52,23 @@ head
   // Import materialize.css
   link(type='text/css', rel='stylesheet', href='stylesheets/materialize.min.css', media='screen,projection')
   | &#x9;
+
   script(src='javascripts/materialize.min.js')
   | &#x9;
   script(src='http://d3js.org/d3.v3.min.js', charset='utf-8')
   | &#x9;
   script(src='javascripts/d3.cloud.js')
   | &#x9;
-  script(src='diagramm/typescript/pie_chart.js')
+  link(href='http://fonts.googleapis.com/css?family=Slabo+27px', rel='stylesheet', type='text/css')
   | &#x9;
-  script(src='diagramm/typescript/stack.js')
+  link(rel="stylesheet" type="text/css" href="stylesheets/normalize.css")
   | &#x9;
-  script(src='diagramm/typescript/multiline.js')
+  link(rel="stylesheet" type="text/css" href="stylesheets/demo.css")
   | &#x9;
-  script(src='diagramm/typescript/tagcloud.js')
-
+  link(rel="stylesheet" type="text/css" href="stylesheets/component2.css")
+  | &#x9;
+  script(src="javascripts/modernizr-2.6.2.min.js")
+  | &#x9;
 
 
 

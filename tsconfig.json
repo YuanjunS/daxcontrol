@@ -6,6 +6,11 @@
   },
   "exclude": [
     "node_modules",
-    "public"
+    "public/build",
+    "public/fonts",
+    "public/javascripts"
+
+
+
   ]
 }

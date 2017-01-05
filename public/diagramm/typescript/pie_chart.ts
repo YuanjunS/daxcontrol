@@ -1,7 +1,7 @@
 /**
  * Created by apple on 11/26/16.
  */
-///<reference path="../../scripts/d3.d.ts" />
+///<reference path="../../../scripts/d3.d.ts" />
 "use strict"
  module Chart {
 
@@ -21,7 +21,7 @@
          }
 
 
-         public width = 600;
+         public width = 500;
          public height = 500;
          public radius = Math.min(this.width, this.height) / 2;
          //public color = d3.scale.category20();
@@ -62,7 +62,7 @@
 
 
              var svg = d3.select("body").append("svg")
-                 .attr("width", this.width)
+                 .attr("width", this.width +120)
                  .attr("id", "PieChartSVG")
                  .attr("height", this.height)
                  .append("g")
@@ -158,10 +158,11 @@
                  .on("click", clicked);
 
              function clicked() {
-                 svg.call(zoom.event); // https://github.com/mbostock/d3/issues/2387
-
+                 svg.call(zoom.event);
+                 var width= 600;
+                 var height= 500;
                  // Record the coordinates (in data space) of the center (in screen space).
-                 var center0 = zoom.center(), translate0 = zoom.translate(), coordinates0 = coordinates(center0);
+                 var center0 = [100,100], translate0 = zoom.translate(), coordinates0 = coordinates(center0);
                  zoom.scale(zoom.scale() * Math.pow(2, +this.getAttribute("data-zoom-pie")));
 
                  // Translate back to the center.
