@@ -2,92 +2,94 @@
 extends layout
 
 
-
-
 block content
-  script(src='diagramm/typescript/pie_chart.js')
-  | &#x9;
-  script(src='diagramm/typescript/stack.js')
-  | &#x9;
-  script(src='diagramm/typescript/multiline.js')
-  | &#x9;
-  script(src='diagramm/typescript/tagcloud.js')
-  | &#x9;
-  .container
-   // Top Navigation
-   .component
-     h2 DaXControl
 
-     // Start Nav Structure
+    style.
+        #Menu
+    | &#x9;
+    script.
+        $(function () {
 
-     button#cn-button.cn-button Menu
-     | &#x9;&#x9;&#x9;&#x9;
-     #cn-wrapper.cn-wrapper
-       ul
-         li
-           a(href='#')
-             span About
-         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-         li
-           a(href='#')
-             span Filter
-         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-         li
-           a(href='#')
-             span Zoom
-         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-         li
-           a(href='#')
-             span Search
-         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-        //  End of Nav Structure
+        $("#Menu").draggable();
+        });
+    | &#x9;
 
-   script(src='javascripts/polyfills.js')
-   | &#x9;&#x9;
-   script(src='javascripts/demo2.js')
-   | &#x9;&#x9;
-   // For the demo ad only
-   script(src='http://tympanus.net/codrops/adpacks/demoad.js')
-   | &#x9;&#x9;
-  #menuPieChart.fixed-action-btn.fab-backdrop.click-to-toggle(style='display:none;')
-      a.btn-floating.btn-large.red
-        i.material-icons menu
-      | &#x9;
-      #icons
-      ul
-        li
-          a.btn-floating.red
-            i.material-icons(onclick='Show_Hidden(ZoomPieChart)') backup
-        | &#x9;&#x9;&#x9;
-        #ZoomPieChart(style='display:none')
-          li
-            button.btn-floating.yellow.darken-1(data-zoom-pie='+0.25')
-              i.material-icon add
-            | &#x9;&#x9;
-            li
-              button.btn-floating.green(data-zoom-pie='-0.25')
-                i.material-icons delete
-        li
-          a.btn-floating.yellow.darken-1
-            i.material-icon filter
-        | &#x9;&#x9;
-        li
-          a.btn-floating.green
-            i.material-icons title
-        | &#x9;&#x9;
-        li
-          a.btn-floating.blue
-            i.material-icons settings
-            | &#x9;
+    .wrapper
+        .container
+            h2 DaXControl
+            | &#x9;&#x9;&#x9;
+            #Menu.container1
+                button#button.button Menu
+                | &#x9;&#x9;&#x9;
+                #nav-wrapper.nav-wrapper
+                    ul
+                        li#zoom
+                            a
+                                span ZOOM
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span FILTER
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span SEARCH
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li#reset
+                            a
+                                span RESET
+                // End nav-wrapper
+                #zoom-wrapper.zoom-wrapper
+                    ul
+                        li(zoom_pie='0.2')
+                            a
+                                span IN
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li(zoom_pie='-0.2')
+                            a#zoomout
+                                span OUT
+                | &#x9;&#x9;&#x9;
+                #filter-wrapper.filter-wrapper
+                    ul
+                        li
+                            a
+                                span
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span
+                | &#x9;&#x9;&#x9;
+                #search-wrapper.search-wrapper
+                    ul
+                        li
+                            span
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            span
+                        // END Container
+                    // END wrapper
+
+    script(type='text/javascript', src='javascripts/polyfills.js')
+    | &#x9;
+    script(type='text/javascript', src='javascripts/scripts.js')
+
+
+    .piechart#piechart
+        script(src='diagramm/typescript/pie_chart.js')
+
     | &#x9;&#x9;
-  #piechartandbutton
-      h3#piechartbutton(onclick='Show_Hidden(menuPieChart)') Ring Chart
-      | &#x9;&#x9;&#x9;
-      #piechart
+    script(src='diagramm/typescript/stack.js')
     | &#x9;
-  #stack
+    script(src='diagramm/typescript/tagcloud.js')
     | &#x9;
-    #multandbutton
-      #mult
+    script(src='diagramm/typescript/multiline.js')
+
+
+
+    .chart#stack
     | &#x9;
-    #tagcloud
+    .chart#tagcloud
+    | &#x9;
+    .chart#mult
+
+

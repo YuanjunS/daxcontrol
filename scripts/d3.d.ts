@@ -928,6 +928,7 @@ declare namespace d3 {
         export function flush(): void;
     }
     interface Event extends KeyboardEvent, MouseEvent {
+        transform:any;
         translate:[number,number];
         scale:number;
         dx:any;

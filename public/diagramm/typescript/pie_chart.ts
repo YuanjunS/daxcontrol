@@ -154,7 +154,7 @@
                  svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
              }
 
-             d3.selectAll("button[data-zoom-pie]")
+             d3.selectAll("li[zoom_pie]")
                  .on("click", clicked);
 
              function clicked() {
@@ -163,7 +163,7 @@
                  var height= 500;
                  // Record the coordinates (in data space) of the center (in screen space).
                  var center0 = [100,100], translate0 = zoom.translate(), coordinates0 = coordinates(center0);
-                 zoom.scale(zoom.scale() * Math.pow(2, +this.getAttribute("data-zoom-pie")));
+                 zoom.scale(zoom.scale() * Math.pow(2, +this.getAttribute("zoom_pie")));
 
                  // Translate back to the center.
                  var center1 = point(coordinates0);
