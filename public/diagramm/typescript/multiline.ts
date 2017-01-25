@@ -1,7 +1,7 @@
 /**
  * Created by mls on 2016/11/28.
  */
-///<reference path="../../scripts/d3.d.ts"/>
+///<reference path="../../../scripts/d3.d.ts"/>
     "use strict"
 
 module Chart {
@@ -14,9 +14,9 @@ module Chart {
         }
 
         public render() {
-            var margin = {top: 100, right: 50, bottom: 30, left: 50},
+            var margin = {top: 150, right: 50, bottom: 30, left: 50},
                 width = 650 - margin.left - margin.right,
-                height = 500 - margin.top - margin.bottom;
+                height = 600 - margin.top - margin.bottom;
 
             var parseDate = d3.time.format("%d-%b-%y").parse;
 
@@ -150,6 +150,35 @@ module Chart {
             }
 
             svg.call(zoom);
+
+            d3.selectAll("li[zoom_multi]")
+                .on("click", clicked);
+
+
+            function clicked() {
+                svg.call(zoom.event);
+                var width = 600;
+                var height = 500;
+                // Record the coordinates (in data space) of the center (in screen space).
+                var center0 = [100, 100], translate0 = zoom.translate(), coordinates0 = coordinates(center0);
+                zoom.scale(zoom.scale() * Math.pow(2, +this.getAttribute("zoom_multi")));
+
+                // Translate back to the center.
+                var center1 = point(coordinates0);
+                zoom.translate([translate0[0] + center0[0] - center1[0], translate0[1] + center0[1] - center1[1]]);
+
+                svg.transition().duration(400).call(zoom.event);
+            }
+
+            function coordinates(point) {
+                var scale = zoom.scale(), translate = zoom.translate();
+                return [(point[0] - translate[0]) / scale, (point[1] - translate[1]) / scale];
+            }
+
+            function point(coordinates) {
+                var scale = zoom.scale(), translate = zoom.translate();
+                return [coordinates[0] * scale + translate[0], coordinates[1] * scale + translate[1]];
+            }
 
         }
     }
