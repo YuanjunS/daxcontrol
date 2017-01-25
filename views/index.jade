@@ -10,8 +10,17 @@ block content
     script.
         $(function () {
 
-        $("#Menu").draggable();
+        $("#").draggable();
         });
+    | &#x9;
+    script.
+        function show_hiden(id) {
+            var e = document.getElementById(id);
+            if (e.style.display == 'block')
+                e.style.display = 'none';
+            else
+                e.style.display = 'block';
+        }
     | &#x9;
 
     .wrapper
@@ -19,27 +28,44 @@ block content
             h2 DaXControl
             | &#x9;&#x9;&#x9;
             #Menu.container1
-                button#button.button Menu
+
+                button#piebutton.piebutton(onclick="show_hiden('pie_button')") Pie
                 | &#x9;&#x9;&#x9;
-                #nav-wrapper.nav-wrapper
+                button#stackbutton.stackbutton(onclick="show_hiden('stack_button')") Stack
+                | &#x9;&#x9;&#x9;
+                button#multibutton.multibutton(onclick="show_hiden('multi_button')") Line
+                | &#x9;&#x9;&#x9;
+                button#cloudbutton.cloudbutton(onclick="show_hiden('cloud_button')") Cloud
+                | &#x9;&#x9;&#x9;
+                //end show-hidden button
+                button#pie_button(style='background-color:#a7f237').button Menu
+                | &#x9;&#x9;&#x9;
+                button#stack_button(style='background-color:#43f6e3').button Menu
+                | &#x9;&#x9;&#x9;
+                button#multi_button(style='background-color:#934ff9').button Menu
+                | &#x9;&#x9;&#x9;
+                button#cloud_button(style='background-color:#fc5c6c').button Menu
+                | &#x9;&#x9;&#x9;
+                //beginn pie chart wrapper
+                #pie_nav-wrapper.nav-wrapper
                     ul
-                        li#zoom
+                        li#pie_zoom
                             a
                                 span ZOOM
                         | &#x9;&#x9;&#x9;&#x9;&#x9;
-                        li
+                        li#pie_filter
                             a
                                 span FILTER
                         | &#x9;&#x9;&#x9;&#x9;&#x9;
-                        li
+                        li#pie_search
                             a
                                 span SEARCH
                         | &#x9;&#x9;&#x9;&#x9;&#x9;
-                        li#reset
+                        li#pie_reset
                             a
                                 span RESET
                 // End nav-wrapper
-                #zoom-wrapper.zoom-wrapper
+                #pie_zoom-wrapper.second-nav-wrapper
                     ul
                         li(zoom_pie='0.2')
                             a
@@ -49,25 +75,190 @@ block content
                             a#zoomout
                                 span OUT
                 | &#x9;&#x9;&#x9;
-                #filter-wrapper.filter-wrapper
+                #pie_filter-wrapper.second-nav-wrapper
                     ul
-                        li
+                        li#pie-filter
                             a
-                                span
+                                span VAST
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         li
                             a
-                                span
+                                span INFO
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span Sci
                 | &#x9;&#x9;&#x9;
-                #search-wrapper.search-wrapper
+                #pie_search-wrapper.second-nav-wrapper
                     ul
                         li
-                            span
+                            a
+                                span se
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         li
-                            span
-                        // END Container
+                            a
+                                span r
+                        // END pie chart wrapper
+                 //begin stack chart wrapper
+                #stack_nav-wrapper.nav-wrapper
+                    ul
+                        li#stack_zoom
+                            a
+                                span ZOOM
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li#stack_filter
+                            a
+                                span FILTER
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li#stack_search
+                            a
+                                span SEARCH
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li#stack_reset
+                            a
+                                span RESET
+                // End nav-wrapper
+                #stack_zoom-wrapper.second-nav-wrapper
+                    ul
+                        li(zoom_stack='0.2')
+                            a
+                                span IN
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li(zoom_stack='-0.2')
+                            a
+                                span OUT
+                | &#x9;&#x9;&#x9;
+                #stack_filter-wrapper.second-nav-wrapper
+                    ul
+                        li#pie-filter
+                            a
+                                span VAST
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span INFO
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span Sci
+                | &#x9;&#x9;&#x9;
+                #stack_search-wrapper.second-nav-wrapper
+                    ul
+                        li
+                            a
+                                span se
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span r
+                                //end stack chart wrapper
+                 //begin multiline chart wrapper
+                #multi_nav-wrapper.nav-wrapper
+                    ul
+                        li#multi_zoom
+                            a
+                                span ZOOM
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li#multi_filter
+                            a
+                                span FILTER
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li#multi_search
+                            a
+                                span SEARCH
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li#multi_reset
+                            a
+                                span RESET
+                // End nav-wrapper
+                #multi_zoom-wrapper.second-nav-wrapper
+                    ul
+                        li(zoom_multi='0.2')
+                            a
+                                span IN
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li(zoom_multi='-0.2')
+                            a#zoomout
+                                span OUT
+                | &#x9;&#x9;&#x9;
+                #multi_filter-wrapper.second-nav-wrapper
+                    ul
+                        li#pie-filter
+                            a
+                                span VAST
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span INFO
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span Sci
+                | &#x9;&#x9;&#x9;
+                #multi_search-wrapper.second-nav-wrapper
+                    ul
+                        li
+                            a
+                                span se
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span r
+                                //end multiline chart wrapper
+                 //begin tagcloud wrapper
+                #cloud_nav-wrapper.nav-wrapper
+                    ul
+                        li#cloud_zoom
+                            a
+                                span ZOOM
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li#cloud_filter
+                            a
+                                span FILTER
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li#cloud_search
+                            a
+                                span SEARCH
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;
+                        li#cloud_reset
+                            a
+                                span RESET
+                // End nav-wrapper
+                #cloud_zoom-wrapper.second-nav-wrapper
+                    ul
+                        li(zoom_pie='0.2')
+                            a
+                                span IN
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li(zoom_pie='-0.2')
+                            a#zoomout
+                                span OUT
+                | &#x9;&#x9;&#x9;
+                #cloud_filter-wrapper.second-nav-wrapper
+                    ul
+                        li#pie-filter
+                            a
+                                span VAST
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span INFO
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span Sci
+                | &#x9;&#x9;&#x9;
+                #cloud_search-wrapper.second-nav-wrapper
+                    ul
+                        li
+                            a
+                                span se
+                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        li
+                            a
+                                span r
                     // END wrapper
+
 
     script(type='text/javascript', src='javascripts/polyfills.js')
     | &#x9;
