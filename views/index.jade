@@ -83,7 +83,7 @@ block content
                     | &#x9;&#x9;&#x9;
                 #pie_search-wrapper.second-nav-wrapper
                     ul
-                        li(onclick='Search()')
+                        li(onclick='Search(1)')
                             a
                                 span Search
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
@@ -127,7 +127,7 @@ block content
                 | &#x9;&#x9;&#x9;
                 #stack_search-wrapper.second-nav-wrapper
                     ul
-                        li(onclick='Search()')
+                        li(onclick='Search(2)')
                             a
                                 span Search
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
@@ -160,13 +160,13 @@ block content
                                 span IN
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         li(zoom_multi='-0.2')
-                            a#zoomout
+                            a
                                 span OUT
                 | &#x9;&#x9;&#x9;
                 #multi_filter-wrapper.second-nav-wrapper
-                    p#slider-range
+                    p#slider-range_multi
                         label(for='amount')
-                        input#amount(type='text', style='border:0; color:#f6931f; font-weight:bold;')
+                        input#amount_multi(type='text', style='border:0; color:#f6931f; font-weight:bold;')
                 | &#x9;&#x9;&#x9;
                 #multi_search-wrapper.second-nav-wrapper
                     ul
@@ -204,7 +204,7 @@ block content
                                 span IN
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         li(zoom_pie='-0.2')
-                            a#zoomout
+                            a
                                 span OUT
                 | &#x9;&#x9;&#x9;
                 #cloud_filter-wrapper.second-nav-wrapper
@@ -223,7 +223,7 @@ block content
                 | &#x9;&#x9;&#x9;
                 #cloud_search-wrapper.second-nav-wrapper
                     ul
-                        li(onclick='Search()')
+                        li(onclick='Search(3)')
                             a
                                 span Search
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
@@ -237,16 +237,16 @@ block content
     script(type='text/javascript', src='javascripts/scripts.js')
 
 
-    .piechart#piechart
-        script(src='diagramm/typescript/pie_chart.js')
 
-    | &#x9;&#x9;
+
     script(src='diagramm/typescript/stack.js')
     | &#x9;
-    script(src='diagramm/typescript/tagcloud.js')
+    script(src='diagramm/typescript/pie_chart.js')
     | &#x9;
     script(src='diagramm/typescript/multiline.js')
+    | &#x9;
 
+    script(src='diagramm/typescript/tagcloud.js')
 
 
 

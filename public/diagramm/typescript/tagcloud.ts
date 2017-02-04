@@ -430,7 +430,7 @@ module Chart{
             d3.csv("/data/keyword.csv", function(data) {
                 // build the list of city names
                 data.forEach( function (d:any) {
-                    (<any>window).tagCloudName.push(d.keyword)
+                    (<any>window).tagCloudName.push(d.keyword);
 
                     keyword.push(d.keyword);
                 });
