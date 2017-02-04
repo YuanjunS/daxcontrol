@@ -7,7 +7,9 @@
 "use strict"
 declare var tagCloudName;
 (<any>window).tagCloudName = [];
-let ind = 0;
+let ind = 0,
+    path = "/data/keyword.csv",
+    c = 0;
 module Chart{
     interface T{
         keyword?:string[];
@@ -420,34 +422,49 @@ module Chart{
             c.textAlign = "center";
 
             //exports.cloud = cloud;
-
-
-
             var fill = d3.scale.category20();
 
             var keyword = [],
                 width = 600,
                 height= 600;
-            d3.csv("/data/keyword.csv", function(data) {
+            switch(c){
+                case 0:
+                    path = "/data/keyword.csv";
+                    break;
+                case 1:
+                    path = "/data/keyword_VAST.csv";
+                    break;
+                case 2:
+                    path = "/data/keyword_SciVis.csv";
+                    break;
+                case 3:
+                    path = "/data/keyword_InfoVis.csv";
+                    break;
+            }
+            d3.csv(path, function (data) {
                 // build the list of city names
-                data.forEach( function (d:any) {
+                data.forEach(function (d: any) {
                     (<any>window).tagCloudName.push(d.keyword)
 
                     keyword.push(d.keyword);
                 });
-                 d3.layout.cloud()
-                     .size([500, 500])
-                    .words(keyword.map(function(d) {
+                d3.layout.cloud()
+                    .size([500, 500])
+                    .words(keyword.map(function (d) {
                         return {text: d, size: 10 + Math.random() * 90};
                     }))
-                    .rotate(function() { return ~~(Math.random() * 2) * 90; })
+                    .rotate(function () {
+                        return ~~(Math.random() * 2) * 90;
+                    })
                     .font("Impact")
-                    .fontSize(function(d) { return d.size; })
+                    .fontSize(function (d) {
+                        return d.size;
+                    })
                     .on("end", draw)
                     .start();
-                if (ind >1){
-                    var dex = ind -1;
-                    $("#svgCloud"+dex).html("").append($("#svgCloud"+ind))
+                if (ind > 1) {
+                    var dex = ind - 1;
+                    $("#svgCloud" + dex).html("").append($("#svgCloud" + ind))
                 }
             });
 
@@ -456,6 +473,7 @@ module Chart{
                 .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
 
             function draw(words) {
+                ind ++;
                 var svg=d3.select("body").append("svg").attr('id','svgCloud'+ind)
                     .attr("width", 600)
                     .attr("height", 600)
