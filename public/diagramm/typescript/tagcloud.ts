@@ -1,9 +1,12 @@
 /**
  * Created by mls on 2016/11/29.
  */
-///<reference path="../../scripts/d3.d.ts"/>
+///<reference path="../../../scripts/d3.d.ts"/>
+//<reference path="../../scripts/jquery.d.ts" />
+//<reference path="../../scripts/jqueryui.d.ts" />
 "use strict"
-
+declare var tagCloudName;
+(<any>window).tagCloudName = [];
 module Chart{
     interface T{
         keyword?:string[];
@@ -418,14 +421,18 @@ module Chart{
             //exports.cloud = cloud;
 
 
+
             var fill = d3.scale.category20();
+
             var keyword = [],
                 width = 600,
-                height=500;
-            d3.csv("../data/data3.csv", function(data) {
+                height= 600;
+            d3.csv("/data/keyword.csv", function(data) {
                 // build the list of city names
                 data.forEach( function (d:any) {
-                    keyword.push(d.conference);
+                    (<any>window).tagCloudName.push(d.keyword)
+
+                    keyword.push(d.keyword);
                 });
                  d3.layout.cloud()
                      .size([500, 500])
@@ -457,6 +464,12 @@ module Chart{
                     .enter().append("text")
                     .style("font-size", function(d:any) { return d.size + "px"; })
                     .style("fill", function(d, i) { return color(i); })
+                    .attr('data-fill',function(d,i){
+                        return color(i);
+                    })
+                    .attr('class',function(d){
+                        return 'tag-wordcloud tag-'+$.trim((<any>d).text)
+                    })
                     .attr("transform", function(d:any) {
                         return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
                     })

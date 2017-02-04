@@ -38,13 +38,13 @@ block content
                 button#cloudbutton.cloudbutton(onclick="show_hiden('cloud_button')") Cloud
                 | &#x9;&#x9;&#x9;
                 //end show-hidden button
-                button#pie_button(style='background-color:#a7f237').button Menu
+                button#pie_button(style='background-color:#89f793').button Menu
                 | &#x9;&#x9;&#x9;
-                button#stack_button(style='background-color:#43f6e3').button Menu
+                button#stack_button(style='background-color:#fca4f3').button Menu
                 | &#x9;&#x9;&#x9;
-                button#multi_button(style='background-color:#934ff9').button Menu
+                button#multi_button(style='background-color:#96befa').button Menu
                 | &#x9;&#x9;&#x9;
-                button#cloud_button(style='background-color:#fc5c6c').button Menu
+                button#cloud_button(style='background-color:#fedfb2').button Menu
                 | &#x9;&#x9;&#x9;
                 //beginn pie chart wrapper
                 #pie_nav-wrapper.nav-wrapper
@@ -62,7 +62,7 @@ block content
                                 span SEARCH
                         | &#x9;&#x9;&#x9;&#x9;&#x9;
                         li#pie_reset
-                            a
+                            a(onclick='piereset()')
                                 span RESET
                 // End nav-wrapper
                 #pie_zoom-wrapper.second-nav-wrapper
@@ -76,29 +76,20 @@ block content
                                 span OUT
                 | &#x9;&#x9;&#x9;
                 #pie_filter-wrapper.second-nav-wrapper
-                    ul
-                        li#pie-filter
-                            a
-                                span VAST
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                        li
-                            a
-                                span INFO
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                        li
-                            a
-                                span Sci
-                | &#x9;&#x9;&#x9;
+                    p#slider-range_pie
+                        label(for='amount_pie')
+                        input#amount_pie(type='text', style='border:0; color:#f6931f; font-weight:bold;')
+
+                    | &#x9;&#x9;&#x9;
                 #pie_search-wrapper.second-nav-wrapper
                     ul
-                        li
+                        li(onclick='Search()')
                             a
-                                span se
+                                span Search
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                        li
-                            a
-                                span r
-                        // END pie chart wrapper
+                        input#mySearch(type='search', placeholder='Search for something..')
+                    | &#x9;&#x9;&#x9;
+                    // END pie chart wrapper
                  //begin stack chart wrapper
                 #stack_nav-wrapper.nav-wrapper
                     ul
@@ -115,7 +106,7 @@ block content
                                 span SEARCH
                         | &#x9;&#x9;&#x9;&#x9;&#x9;
                         li#stack_reset
-                            a
+                            a(onclick='stackreset()')
                                 span RESET
                 // End nav-wrapper
                 #stack_zoom-wrapper.second-nav-wrapper
@@ -129,29 +120,20 @@ block content
                                 span OUT
                 | &#x9;&#x9;&#x9;
                 #stack_filter-wrapper.second-nav-wrapper
-                    ul
-                        li#pie-filter
-                            a
-                                span VAST
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                        li
-                            a
-                                span INFO
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                        li
-                            a
-                                span Sci
+                    p#slider-range
+                        label(for='amount')
+                        input#amount(type='text', style='border:0; color:#f6931f; font-weight:bold;')
+
                 | &#x9;&#x9;&#x9;
                 #stack_search-wrapper.second-nav-wrapper
                     ul
-                        li
+                        li(onclick='Search()')
                             a
-                                span se
+                                span Search
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                        li
-                            a
-                                span r
-                                //end stack chart wrapper
+                        input#mySearch_s(type='search', placeholder='Search for something..')
+                    | &#x9;&#x9;&#x9;
+                    //end stack chart wrapper
                  //begin multiline chart wrapper
                 #multi_nav-wrapper.nav-wrapper
                     ul
@@ -182,18 +164,9 @@ block content
                                 span OUT
                 | &#x9;&#x9;&#x9;
                 #multi_filter-wrapper.second-nav-wrapper
-                    ul
-                        li#pie-filter
-                            a
-                                span VAST
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                        li
-                            a
-                                span INFO
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                        li
-                            a
-                                span Sci
+                    p#slider-range
+                        label(for='amount')
+                        input#amount(type='text', style='border:0; color:#f6931f; font-weight:bold;')
                 | &#x9;&#x9;&#x9;
                 #multi_search-wrapper.second-nav-wrapper
                     ul
@@ -250,13 +223,12 @@ block content
                 | &#x9;&#x9;&#x9;
                 #cloud_search-wrapper.second-nav-wrapper
                     ul
-                        li
+                        li(onclick='Search()')
                             a
-                                span se
+                                span Search
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                        li
-                            a
-                                span r
+                        input#mySearch_c(type='search', placeholder='Search for something..')
+                    | &#x9;&#x9;&#x9;
                     // END wrapper
 
 
@@ -277,10 +249,5 @@ block content
 
 
 
-    .chart#stack
-    | &#x9;
-    .chart#tagcloud
-    | &#x9;
-    .chart#mult
 
 

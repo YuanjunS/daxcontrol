@@ -2,9 +2,15 @@
  * Created by mls on 2016/11/28.
  */
 ///<reference path="../../../scripts/d3.d.ts"/>
-    "use strict"
+"use strict"
+let begin=0,
+    end = 1000000;
 
 module Chart {
+    // import stack = d3.layout.stack;
+    import stack = Chart.Stack;
+
+
     export class Multiline {
 
         public element: d3.Selection<any>;
@@ -14,9 +20,9 @@ module Chart {
         }
 
         public render() {
-            var margin = {top: 150, right: 50, bottom: 30, left: 50},
+            var margin = {top: 100, right: 50, bottom: 30, left: 50},
                 width = 650 - margin.left - margin.right,
-                height = 600 - margin.top - margin.bottom;
+                height = 500 - margin.top - margin.bottom;
 
             var parseDate = d3.time.format("%d-%b-%y").parse;
 
@@ -83,8 +89,8 @@ module Chart {
                             return v.papernumber; }); }),
                         d3.max(conferences, function(c:any) {
                             return d3.max(c.values, function(v:any) {
-                            return v.papernumber; });
-                    })]);
+                                return v.papernumber; });
+                        })]);
 
                     g.append("g")
                         .attr("class", "axis")
@@ -94,18 +100,20 @@ module Chart {
                     g.append("g")
                         .attr("class", "axis")
                         .call(yAxis);
-                        /*.append("text")
-                        .attr("transform", "rotate(-90)")
-                        .attr("y", 6)
-                        .attr("dy", ".71em")
-                        .style("text-anchor", "end")
-                        .text("Papernumber");*/
+                    /*.append("text")
+                     .attr("transform", "rotate(-90)")
+                     .attr("y", 6)
+                     .attr("dy", ".71em")
+                     .style("text-anchor", "end")
+                     .text("Papernumber");*/
 
                     var conference = g.selectAll(".conference")
                         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
                         .data(conferences)
                         .enter().append("g")
-                        .attr("class", "conference");
+                        .attr("class", function(d,i){
+                            return 'conference conference'+i
+                        });
 
 
                     // 添加path元素，并通过line()计算出值来赋值
@@ -124,20 +132,59 @@ module Chart {
                         .text(function(d) { return d.name });
                     // 添加点
                     /*conference.selectAll("circle")
-                        .data(function(d) { return d; })
-                        .enter()
-                        .append("circle")
-                        .attr("cx", function (d:any) {
-                            return xScale(d.year);
-                        })
-                        .attr("cy", function (d:any) {
-                            return yScale(d.papernumber);
-                        })
-                        .attr("r", 3.5)
-                        .style("stroke", function(d:any) { return zScale(d.name); })
-                        .attr("fill","white");*/
+                     .data(function(d) { return d; })
+                     .enter()
+                     .append("circle")
+                     .attr("cx", function (d:any) {
+                     return xScale(d.year);
+                     })
+                     .attr("cy", function (d:any) {
+                     return yScale(d.papernumber);
+                     })
+                     .attr("r", 3.5)
+                     .style("stroke", function(d:any) { return zScale(d.name); })
+                     .attr("fill","white");*/
+
+
+                    // //////
+
+                    $( "#slider-range" ).slider({
+                        range: true,
+                        min: 1990,
+                        max: 2014,
+                        values: [ 1990, 2014 ],
+                        slide: function( event, ui ) {
+
+                            $( "#amount" ).val(  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+
+                            var begin = ui.values[0];
+                            var end = ui.values[1];
+                            zoom(begin, end);
+
+                            minVal = ui.values[0];
+                            maxVal = ui.values[1];
+
+                            var stack = new Chart.Stack(d3.select('#graph'));
+                            stack.render();
+
+
+                        }
+                    });
+
+                    function zoom(begin, end) {
+
+                        xScale.domain([begin, end - 1]);
+                        svg.select(".axis").call(xAxis);
+                        svg.select('.conference0 .line').attr("d", line(conferences[0].values));
+                        svg.select('.conference1 .line').attr("d", line(conferences[1].values));
+                        svg.select('.conference2 .line').attr("d", line(conferences[2].values));
+                        svg.select('.conference3 .line').attr("d", line(conferences[3].values));
+                    }
+                    /////////
+
                 }
             );
+
             /* zoom function with button*/
             var zoom = d3.behavior.zoom()
                 .scaleExtent([0, 8])
@@ -153,6 +200,7 @@ module Chart {
 
             d3.selectAll("li[zoom_multi]")
                 .on("click", clicked);
+
 
 
             function clicked() {
@@ -180,18 +228,18 @@ module Chart {
                 return [coordinates[0] * scale + translate[0], coordinates[1] * scale + translate[1]];
             }
 
+
+
         }
+
     }
 }
 document.addEventListener('DOMContentLoaded', function () {
 
-    var mult = new Chart.Multiline(d3.select('#multiline'));
+
+        var mult = new Chart.Multiline(d3.select('#multiline'));
 
     mult.render();
 
 
 });
-
-
-
-

@@ -2,15 +2,21 @@
  * Created by apple on 11/26/16.
  */
 ///<reference path="../../../scripts/d3.d.ts" />
+//<reference path="../../scripts/jquery.d.ts" />
+//<reference path="../../scripts/jqueryui.d.ts" />
 "use strict"
+declare var pieChartName;
+(<any>window).pieChartName = [];
+let minVal_pie = 1,
+    maxVal_pie = 5,
+    index_pie=0;
  module Chart {
 
 
      interface TestPieChartData {
-         VAST: number;
-         InfoVis:number;
-         SciVis:number;
-         name: string;
+        keyword:string;
+         value: number;
+         number:number;
      }
 
      export class PieChart {
@@ -31,7 +37,7 @@
          public render() {
              var color = d3.scale.ordinal<string>()
                  .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-
+             index_pie++;
              var arc = d3.svg.arc<d3.layout.pie.Arc<TestPieChartData>>()
                  .outerRadius(this.radius - 10)
                  .innerRadius(this.radius - 70);
@@ -47,37 +53,44 @@
              var pie = d3.layout.pie<TestPieChartData>()
                  .sort(null)
                  .value(function (d) {
-                     return d.VAST;
+                     return d.value;
                  });
              var pie2 = d3.layout.pie<TestPieChartData>()
                  .sort(null)
                  .value(function (d) {
-                     return d.InfoVis;
+
+                     return d.value;
+
                  });
              var pie3 = d3.layout.pie<TestPieChartData>()
                  .sort(null)
                  .value(function (d) {
-                     return d.SciVis;
+
+                     return d.value;
                  });
 
 
              var svg = d3.select("body").append("svg")
-                 .attr("width", this.width +120)
-                 .attr("id", "PieChartSVG")
+                 .attr("width", this.width + 120)
+                 .attr("id", "PieChartSVG"+index_pie)
                  .attr("height", this.height)
                  .append("g")
                  .attr("transform", "translate(" + this.width / 2 + "," + this.height / 2 + ")")
                  .append("g");
 
 
-             d3.csv("../data/dataPieChart.csv", d => ({
-                     VAST: +d['VAST'],
-                     InfoVis: +d['InfoVis'],
-                     SciVis: +d['SciVis'],
-                     name: d['name']
-                 }),
-                 function (error, data) {
-                     //console.log(this.d.data.name);
+
+             d3.csv("../data/keyword_VAST.csv",
+                 function (error, data:any) {
+                     data =data.filter(function(v,i){
+                         return   (v.number>= minVal_pie && v.number<= maxVal_pie);
+
+                     });
+
+                     $.each(data, function (i, v) {
+                         (<any>window).pieChartName.push(v.keyword)
+                     });
+
                      var g = svg.selectAll(".arc")
                          .data(pie(data))
                          .enter().append("g")
@@ -85,19 +98,38 @@
 
                      g.append("path")
                          .attr("d", arc)
+                         .attr('class', function (d) {
+                             return 'pie-path pie-' + d.data.keyword
+                         })
+                         .attr('data-fill', function (d) {
+                             return color(d.data.keyword)
+                         })
                          .style("fill", function (d) {
-                             return color(d.data.name);
+                             return color(d.data.keyword);
                          });
+
 
                      g.append("text")
                          .attr("transform", function (d) {
                              return "translate(" + arc.centroid(d) + ")";
                          })
-                         .attr("dy", ".35em")
+                         .attr("dy", ".20em")
                          .style("text-anchor", "middle")
                          .text(function (d) {
-                             return d.data.name;
+                             return d.data.keyword;
                          });
+
+                 });
+             d3.csv("../data/keyword_SciVis.csv",
+                 function (error, data) {
+                     //data = data.slice(i, j);
+                     data =data.filter(function(v,i){
+                         return   (v.number>= minVal_pie && v.number<= maxVal_pie);
+
+                     });
+                     $.each(data, function (i, v) {
+                         (<any>window).pieChartName.push(v.keyword);
+                     });
                      var g2 = svg.selectAll("arc")
                          .data(pie2(data))
                          .enter().append("g")
@@ -105,8 +137,14 @@
 
                      g2.append("path")
                          .attr("d", arc2)
+                         .attr('class', function (d) {
+                             return 'pie-path pie-' + d.data.keyword
+                         })
+                         .attr('data-fill', function (d) {
+                             return color(d.data.keyword)
+                         })
                          .style("fill", function (d) {
-                             return color(d.data.name);
+                             return color(d.data.keyword);
                          });
 
                      g2.append("text")
@@ -116,8 +154,21 @@
                          .attr("dy", ".35em")
                          .style("text-anchor", "middle")
                          .text(function (d) {
-                             return d.data.name;
+                             console.log(d.data.keyword);
+                             return d.data.keyword;
                          });
+                 });
+
+             d3.csv("../data/keyword_InfoVis.csv",
+                 function (error, data) {
+                     data =data.filter(function(v,i){
+                         return   (v.number>= minVal_pie && v.number<= maxVal_pie);
+
+                     });
+                    // data = data.slice(i, j);
+                     $.each(data, function (i, v) {
+                         (<any>window).pieChartName.push(v.keyword);
+                     });
                      var g3 = svg.selectAll("arc")
                          .data(pie3(data))
                          .enter().append("g")
@@ -125,8 +176,14 @@
 
                      g3.append("path")
                          .attr("d", arc3)
+                         .attr('class', function (d) {
+                             return 'pie-path pie-' + d.data.keyword
+                         })
+                         .attr('data-fill', function (d) {
+                             return color(d.data.keyword)
+                         })
                          .style("fill", function (d) {
-                             return color(d.data.name);
+                             return color(d.data.keyword);
                          });
 
                      g3.append("text")
@@ -136,9 +193,13 @@
                          .attr("dy", ".35em")
                          .style("text-anchor", "middle")
                          .text(function (d) {
-                             return d.data.name;
+                             return d.data.keyword;
                          });
 
+                     if (index_pie > 1) {
+                         var dex = index_pie - 1;
+                         $("#PieChartSVG" + dex).html("").append($("#PieChartSVG" + index_pie))
+                     }
 
                      //});
 
@@ -157,12 +218,13 @@
              d3.selectAll("li[zoom_pie]")
                  .on("click", clicked);
 
+
              function clicked() {
                  svg.call(zoom.event);
-                 var width= 600;
-                 var height= 500;
+                 var width = 600;
+                 var height = 500;
                  // Record the coordinates (in data space) of the center (in screen space).
-                 var center0 = [100,100], translate0 = zoom.translate(), coordinates0 = coordinates(center0);
+                 var center0 = [100, 100], translate0 = zoom.translate(), coordinates0 = coordinates(center0);
                  zoom.scale(zoom.scale() * Math.pow(2, +this.getAttribute("zoom_pie")));
 
                  // Translate back to the center.
@@ -183,14 +245,20 @@
              }
 
              /* dragable*/
+
+
          }
+
+
+
      }
  }
 
+
 document.addEventListener('DOMContentLoaded', function () {
 
-     var piechart1 = new Chart.PieChart(d3.select('#piechart'));
-
-     piechart1.render();
+    var piechart = new Chart.PieChart(d3.select('#piechart1'));
+    ( <any>window).piechart = new Chart.PieChart(d3.select('#piechart1'));
+     piechart.render();
 
 });
