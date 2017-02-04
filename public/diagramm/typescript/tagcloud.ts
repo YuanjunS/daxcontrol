@@ -422,6 +422,9 @@ module Chart{
             c.textAlign = "center";
 
             //exports.cloud = cloud;
+
+
+
             var fill = d3.scale.category20();
 
             var keyword = [],
@@ -441,30 +444,26 @@ module Chart{
                     path = "/data/keyword_InfoVis.csv";
                     break;
             }
-            d3.csv(path, function (data) {
+            d3.csv(path, function(data) {
                 // build the list of city names
-                data.forEach(function (d: any) {
+                data.forEach( function (d:any) {
                     (<any>window).tagCloudName.push(d.keyword)
 
                     keyword.push(d.keyword);
                 });
-                d3.layout.cloud()
-                    .size([500, 500])
-                    .words(keyword.map(function (d) {
+                 d3.layout.cloud()
+                     .size([500, 500])
+                    .words(keyword.map(function(d) {
                         return {text: d, size: 10 + Math.random() * 90};
                     }))
-                    .rotate(function () {
-                        return ~~(Math.random() * 2) * 90;
-                    })
+                    .rotate(function() { return ~~(Math.random() * 2) * 90; })
                     .font("Impact")
-                    .fontSize(function (d) {
-                        return d.size;
-                    })
+                    .fontSize(function(d) { return d.size; })
                     .on("end", draw)
                     .start();
-                if (ind > 1) {
-                    var dex = ind - 1;
-                    $("#svgCloud" + dex).html("").append($("#svgCloud" + ind))
+                if (ind >1){
+                    var dex = ind -1;
+                    $("#svgCloud"+dex).html("").append($("#svgCloud"+ind))
                 }
             });
 

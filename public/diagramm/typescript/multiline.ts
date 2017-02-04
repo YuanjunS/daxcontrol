@@ -5,6 +5,7 @@
 "use strict"
 let begin=0,
     end = 1000000;
+    //index_m = 0;
 
 module Chart {
     // import stack = d3.layout.stack;
@@ -43,7 +44,9 @@ module Chart {
                 .orient("left");
 
             var svg = d3.select("body")
+
                 .append("svg")
+                //.attr("id","svgMulti"+index_m)
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom);
 
@@ -59,7 +62,7 @@ module Chart {
                 })
                 // 选择线条的类型
                 .interpolate("linear");
-
+            //index_m++;
             d3.csv(
                 "../data/Line_Stack.csv",
 
@@ -170,6 +173,28 @@ module Chart {
 
                         }
                     });
+                    $( "#slider-range_multi" ).slider({
+                        range: true,
+                        min: 1990,
+                        max: 2014,
+                        values: [ 1990, 2014 ],
+                        slide: function( event, ui ) {
+
+                            $( "#amount" ).val(  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+
+                            var begin = ui.values[0];
+                            var end = ui.values[1];
+                            zoom(begin, end);
+
+                            minVal = ui.values[0];
+                            maxVal = ui.values[1];
+
+                            var stack = new Chart.Stack(d3.select('#graph'));
+                            stack.render();
+
+
+                        }
+                    });
 
                     function zoom(begin, end) {
 
@@ -180,8 +205,24 @@ module Chart {
                         svg.select('.conference2 .line').attr("d", line(conferences[2].values));
                         svg.select('.conference3 .line').attr("d", line(conferences[3].values));
                     }
-                    /////////
 
+                    d3.select("#multi_reset")
+                        .on("click", reset);
+                    function reset () {
+                        begin=1990;
+                        end=2014;
+                        xScale.domain([begin, end - 1]);
+                        svg.select(".axis").call(xAxis);
+                        svg.select('.conference0 .line').attr("d", line(conferences[0].values));
+                        svg.select('.conference1 .line').attr("d", line(conferences[1].values));
+                        svg.select('.conference2 .line').attr("d", line(conferences[2].values));
+                        svg.select('.conference3 .line').attr("d", line(conferences[3].values));
+                    }
+                    /////////
+                    /*if (index_m > 1) {
+                        var dex = index_m - 1;
+                        $("#svgMulti" + dex).html("").append($("#svgMulti" + index_m))
+                    }*/
                 }
             );
 
