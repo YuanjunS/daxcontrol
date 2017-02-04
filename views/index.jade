@@ -27,7 +27,7 @@ block content
         .container
             h2 DaXControl
             | &#x9;&#x9;&#x9;
-            #Menu(onclick="menuWechseln").container1
+            #Menu(onclick="menuWechseln()").container1
 
                 button#piebutton.piebutton(onclick="show_hiden('pie_button')") Pie
                 | &#x9;&#x9;&#x9;
@@ -194,7 +194,7 @@ block content
                                 span SEARCH
                         | &#x9;&#x9;&#x9;&#x9;&#x9;
                         li#cloud_reset
-                            a
+                            a(onclick="cloudfilter(0)")
                                 span RESET
                 // End nav-wrapper
                 #cloud_zoom-wrapper.second-nav-wrapper
@@ -209,16 +209,16 @@ block content
                 | &#x9;&#x9;&#x9;
                 #cloud_filter-wrapper.second-nav-wrapper
                     ul
-                        li#pie-filter
-                            a
+                        li#cloud-filter
+                            a(onclick="cloudfilter(1)")
                                 span VAST
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         li
-                            a
+                            a(onclick="cloudfilter(2)")
                                 span INFO
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         li
-                            a
+                            a(onclick="cloudfilter(3)")
                                 span Sci
                 | &#x9;&#x9;&#x9;
                 #cloud_search-wrapper.second-nav-wrapper
