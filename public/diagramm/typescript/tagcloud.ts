@@ -7,6 +7,7 @@
 "use strict"
 declare var tagCloudName;
 (<any>window).tagCloudName = [];
+let ind = 0;
 module Chart{
     interface T{
         keyword?:string[];
@@ -444,6 +445,10 @@ module Chart{
                     .fontSize(function(d) { return d.size; })
                     .on("end", draw)
                     .start();
+                if (ind >1){
+                    var dex = ind -1;
+                    $("#svgCloud"+dex).html("").append($("#svgCloud"+ind))
+                }
             });
 
             var color = d3.scale.linear<string>()
@@ -451,7 +456,7 @@ module Chart{
                 .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
 
             function draw(words) {
-                var svg=d3.select("body").append("svg")
+                var svg=d3.select("body").append("svg").attr('id','svgCloud'+ind)
                     .attr("width", 600)
                     .attr("height", 600)
                     .attr("class", "wordcloud")
