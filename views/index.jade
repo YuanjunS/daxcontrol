@@ -4,39 +4,44 @@ extends layout
 
 block content
 
-    style.
-        #Menu
-    | &#x9;
-    script.
-        $(function () {
 
-        $("#").draggable();
-        });
-    | &#x9;
-    script.
-        function show_hiden(id) {
-            var e = document.getElementById(id);
-            if (e.style.display == 'block')
-                e.style.display = 'none';
-            else
-                e.style.display = 'block';
-        }
-    | &#x9;
 
     .wrapper
+
         .container
             h2 DaXControl
             | &#x9;&#x9;&#x9;
-            #Menu(onclick="menuWechseln()").container1
+            .btn-group.btn-group-justified(role='group', aria-label='...',style='transform:translate(-155px,725px);width:125%')
+                .btn-group(role='group')
+                    button#stackbutton.btn.btn-default(type='button',onclick="menuWechseln('stack_button')",style='color: #1780b4;') Stack
+                .btn-group(role='group')
+                    button#multibutton.btn.btn-default(type='button',onclick="menuWechseln('multi_button')",style='color: #1780b4;') Line
+                .btn-group(role='group')
+                    button#nullbutton.btn.btn-default(type='button',style='display:none') null
+                .btn-group(role='group')
+                    button#piebutton.btn.btn-default(type='button',onclick="menuWechseln('pie_button')",style='color: #1780b4;') Pie
+                .btn-group(role='group')
+                    button#cloudbutton.btn.btn-default(type='button',onclick="menuWechseln('cloud_button')",style='color: #1780b4;') Cloud
 
-                button#piebutton.piebutton(onclick="show_hiden('pie_button')") Pie
-                | &#x9;&#x9;&#x9;
-                button#stackbutton.stackbutton(onclick="show_hiden('stack_button')") Stack
-                | &#x9;&#x9;&#x9;
-                button#multibutton.multibutton(onclick="show_hiden('multi_button')") Line
-                | &#x9;&#x9;&#x9;
-                button#cloudbutton.cloudbutton(onclick="show_hiden('cloud_button')") Cloud
-                | &#x9;&#x9;&#x9;
+            #Menu.container1
+                //
+                    button#piebutton.piebutton(onclick="menuWechseln('pie_button')") Pie
+                    | &#x9;&#x9;&#x9;
+                    button#stackbutton.stackbutton(onclick="menuWechseln('stack_button')") Stack
+                    | &#x9;&#x9;&#x9;
+                    button#multibutton.multibutton(onclick="menuWechseln('multi_button')") Line
+                    | &#x9;&#x9;&#x9;
+                    button#cloudbutton.cloudbutton(onclick="menuWechseln('cloud_button')") Cloud
+                    | &#x9;&#x9;&#x9;
+
+
+                //.btn-group.btn-group-justified(role='group', aria-label='...',style='transform:translate(150px,-75px);width:50%')
+                    .btn-group(role='group')
+                        button#multibutton.btn.btn-default(type='button',onclick="menuWechseln('multi_button')") Line
+                    .btn-group(role='group')
+                        button#cloudbutton.btn.btn-default(type='button',onclick="menuWechseln('cloud_button')") Cloud
+
+
                 //end show-hidden button
                 button#pie_button(style='background-color:#89f793').button Menu
                 | &#x9;&#x9;&#x9;
@@ -46,6 +51,7 @@ block content
                 | &#x9;&#x9;&#x9;
                 button#cloud_button(style='background-color:#fedfb2').button Menu
                 | &#x9;&#x9;&#x9;
+
                 //beginn pie chart wrapper
                 #pie_nav-wrapper.nav-wrapper
                     ul
@@ -72,24 +78,24 @@ block content
                                 span IN
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         li(zoom_pie='-0.2')
-                            a#zoomout
+                            a
                                 span OUT
                 | &#x9;&#x9;&#x9;
                 #pie_filter-wrapper.second-nav-wrapper
                     p#slider-range_pie
                         label(for='amount_pie')
-                        input#amount_pie(type='text', style='border:0; color:#f6931f; font-weight:bold;')
+                        input#amount_pie(type='text', style='border:0; color:#f6931f; font-weight:bold;transform:translateY(50px)')
 
                     | &#x9;&#x9;&#x9;
                 #pie_search-wrapper.second-nav-wrapper
                     ul
-                        li(onclick='Search()')
+                        li(onclick='Search(1)')
                             a
                                 span Search
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         input#mySearch(type='search', placeholder='Search for something..')
-                    | &#x9;&#x9;&#x9;
-                    // END pie chart wrapper
+
+                        // END pie chart wrapper
                  //begin stack chart wrapper
                 #stack_nav-wrapper.nav-wrapper
                     ul
@@ -127,14 +133,14 @@ block content
                 | &#x9;&#x9;&#x9;
                 #stack_search-wrapper.second-nav-wrapper
                     ul
-                        li(onclick='Search()')
-                            a
+                        li
+                            a(onclick='Search(2)')
                                 span Search
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         input#mySearch_s(type='search', placeholder='Search for something..')
-                    | &#x9;&#x9;&#x9;
-                    //end stack chart wrapper
-                 //begin multiline chart wrapper
+                | &#x9;&#x9;&#x9;
+                //end stack chart wrapper
+                //begin multiline chart wrapper
                 #multi_nav-wrapper.nav-wrapper
                     ul
                         li#multi_zoom
@@ -150,7 +156,7 @@ block content
                                 span SEARCH
                         | &#x9;&#x9;&#x9;&#x9;&#x9;
                         li#multi_reset
-                            a
+                            a()
                                 span RESET
                 // End nav-wrapper
                 #multi_zoom-wrapper.second-nav-wrapper
@@ -160,13 +166,13 @@ block content
                                 span IN
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         li(zoom_multi='-0.2')
-                            a#zoomout
+                            a
                                 span OUT
                 | &#x9;&#x9;&#x9;
                 #multi_filter-wrapper.second-nav-wrapper
-                    p#slider-range
+                    p#slider-range_multi
                         label(for='amount')
-                        input#amount(type='text', style='border:0; color:#f6931f; font-weight:bold;')
+                        input#amount_multi(type='text', style='border:0; color:#f6931f; font-weight:bold;')
                 | &#x9;&#x9;&#x9;
                 #multi_search-wrapper.second-nav-wrapper
                     ul
@@ -204,7 +210,7 @@ block content
                                 span IN
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         li(zoom_pie='-0.2')
-                            a#zoomout
+                            a
                                 span OUT
                 | &#x9;&#x9;&#x9;
                 #cloud_filter-wrapper.second-nav-wrapper
@@ -223,7 +229,7 @@ block content
                 | &#x9;&#x9;&#x9;
                 #cloud_search-wrapper.second-nav-wrapper
                     ul
-                        li(onclick='Search()')
+                        li(onclick='Search(3)')
                             a
                                 span Search
                         | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
@@ -237,11 +243,9 @@ block content
     script(type='text/javascript', src='javascripts/scripts.js')
 
 
-    .piechart#piechart
-        script(src='diagramm/typescript/pie_chart.js')
-
-    | &#x9;&#x9;
     script(src='diagramm/typescript/stack.js')
+    | &#x9;
+    script(src='diagramm/typescript/pie_chart.js')
     | &#x9;
     script(src='diagramm/typescript/tagcloud.js')
     | &#x9;
