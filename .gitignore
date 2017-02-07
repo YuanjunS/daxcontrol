@@ -2,7 +2,9 @@
 ### Compiled files
 *.js
 !scripts/*.js
+!public/javascripts/*.js
 *.css
+!public/stylesheets/*.css
 *.map
 public/build
 
