@@ -60,7 +60,7 @@ module Chart {
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-                .call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom",function(){
+                .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom",function(){
                     svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
                 }));
 
@@ -193,8 +193,8 @@ module Chart {
 
 
             var zoom = d3.behavior.zoom()
-                .scaleExtent([0, 8])
-                .center([width / 2, height / 2])
+                .scaleExtent([1, 8])
+                //.center([width / 2, height / 2])
                 .size([width, height])
                 .on("zoom", zoomed);
 
@@ -210,11 +210,11 @@ module Chart {
 
             function clicked() {
                 svg.call(zoom.event);
-                var margin = {top: 20, right: 50, bottom: 30, left: 60},
+                var margin = {top: 20, right: 50, bottom: 30, left: 100},
                     width = 650 - margin.left - margin.right,
                     height = 500 - margin.top - margin.bottom;
                 // Record the coordinates (in data space) of the center (in screen space).
-                var center0 = [-100, 100], translate0 = zoom.translate(), coordinates0 = coordinates(center0);
+                var center0 = [-300, 100], translate0 = zoom.translate(), coordinates0 = coordinates(center0);
                 zoom.scale(zoom.scale() * Math.pow(2, +this.getAttribute("zoom_stack")));
 
                 // Translate back to the center.
