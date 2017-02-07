@@ -1,6 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Compiled files
-*.js
 !scripts/*.js
 !public/javascripts/*.js
 *.css
