@@ -280,10 +280,10 @@
     width: 14.5em;
     height: 14.5em;
     border-radius: 50%;
-    background: #429a67;
-    background: -webkit-radial-gradient(transparent 35%, #429a67 35%);
-    background: -moz-radial-gradient(transparent 35%, #429a67 35%);
-    background: radial-gradient(transparent 35%, #429a67 35%);
+    background: #999999;
+    background: -webkit-radial-gradient(transparent 35%, #999999 35%);
+    background: -moz-radial-gradient(transparent 35%, #999999 35%);
+    background: radial-gradient(transparent 35%, #999999 35%);
     color: #fff;
     text-align: center;
     text-decoration: none;
@@ -305,10 +305,10 @@
     width:17.5em;
     height: 17.5em;
     border-radius: 50%;
-    background: #429a67;
-    background: -webkit-radial-gradient(transparent 35%, #429a67 35%);
-    background: -moz-radial-gradient(transparent 35%, #429a67 35%);
-    background: radial-gradient(transparent 35%, #429a67 35%);
+    background: #333333;
+    background: -webkit-radial-gradient(transparent 35%, #333333 35%);
+    background: -moz-radial-gradient(transparent 35%, #333333 35%);
+    background: radial-gradient(transparent 35%, #333333 35%);
     color: #fff;
     text-align: center;
     text-decoration: none;
@@ -335,9 +335,9 @@
 .nav-wrapper li a:hover,
 .nav-wrapper li a:visited,
 .nav-wrapper li a:focus {
-    background: -webkit-radial-gradient(transparent 35%, #449e6a 35%);
-    background: -moz-radial-gradient(transparent 35%, #449e6a 35%);
-    background: radial-gradient(transparent 35%, #449e6a 35%);
+    background: -webkit-radial-gradient(transparent 35%, #333333 35%);
+    background: -moz-radial-gradient(transparent 35%, #333333 35%);
+    background: radial-gradient(transparent 35%, #333333 35%);
 }
 .nav-wrapper li a:focus {
     position: fixed; /* fix the displacement bug in webkit browsers when using tab key */
