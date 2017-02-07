@@ -333,7 +333,7 @@
 }
 
 .nav-wrapper li a:hover,
-.nav-wrapper li a:active,
+.nav-wrapper li a:visited,
 .nav-wrapper li a:focus {
     background: -webkit-radial-gradient(transparent 35%, #449e6a 35%);
     background: -moz-radial-gradient(transparent 35%, #449e6a 35%);
