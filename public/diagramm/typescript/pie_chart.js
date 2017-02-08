@@ -85,6 +85,31 @@ var Chart;
                     .text(function (d) {
                     return d.data.keyword;
                 });
+                var tooltip = d3.select("body")
+                    .append("div")
+                    .attr("class", "tooltip")
+                    .style("opacity", 0.0);
+                g.on("mouseover", function (d) {
+                    /*
+                     鼠标移入时，
+                     （1）通过 selection.html() 来更改提示框的文字
+                     （2）通过更改样式 left 和 top 来设定提示框的位置
+                     （3）设定提示框的透明度为1.0（完全不透明）
+                     */
+                    tooltip.html("The frequency of " + d.data.keyword + "<br />" + d.data.value)
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY + 20) + "px")
+                        .style("opacity", 1.0);
+                })
+                    .on("mousemove", function (d) {
+                    /* 鼠标移动时，更改样式 left 和 top 来改变提示框的位置 */
+                    tooltip.style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY + 20) + "px");
+                })
+                    .on("mouseout", function (d) {
+                    /* 鼠标移出时，将透明度设定为0.0（完全透明）*/
+                    tooltip.style("opacity", 0.0);
+                });
             });
             d3.csv("../data/keyword_SciVis.csv", function (error, data) {
                 //data = data.slice(i, j);
@@ -116,8 +141,32 @@ var Chart;
                     .attr("dy", ".35em")
                     .style("text-anchor", "middle")
                     .text(function (d) {
-                    console.log(d.data.keyword);
                     return d.data.keyword;
+                });
+                var tooltip = d3.select("body")
+                    .append("div")
+                    .attr("class", "tooltip")
+                    .style("opacity", 0.0);
+                g2.on("mouseover", function (d) {
+                    /*
+                     鼠标移入时，
+                     （1）通过 selection.html() 来更改提示框的文字
+                     （2）通过更改样式 left 和 top 来设定提示框的位置
+                     （3）设定提示框的透明度为1.0（完全不透明）
+                     */
+                    tooltip.html("The frequency of " + d.data.keyword + "<br />" + d.data.value)
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY + 20) + "px")
+                        .style("opacity", 1.0);
+                })
+                    .on("mousemove", function (d) {
+                    /* 鼠标移动时，更改样式 left 和 top 来改变提示框的位置 */
+                    tooltip.style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY + 20) + "px");
+                })
+                    .on("mouseout", function (d) {
+                    /* 鼠标移出时，将透明度设定为0.0（完全透明）*/
+                    tooltip.style("opacity", 0.0);
                 });
             });
             d3.csv("../data/keyword_InfoVis.csv", function (error, data) {
@@ -152,11 +201,44 @@ var Chart;
                     .text(function (d) {
                     return d.data.keyword;
                 });
+                var tooltip = d3.select("body")
+                    .append("div")
+                    .attr("class", "tooltip")
+                    .style("opacity", 0.0);
+                g3.on("mouseover", function (d) {
+                    tooltip.html("The frequency of " + d.data.keyword + "<br />" + d.data.value)
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY + 20) + "px")
+                        .style("opacity", 1.0);
+                })
+                    .on("mousemove", function (d) {
+                    tooltip.style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY + 20) + "px");
+                })
+                    .on("mouseout", function (d) {
+                    tooltip.style("opacity", 0.0);
+                });
                 if (index_pie > 1) {
                     var dex = index_pie - 1;
                     $("#PieChartSVG" + dex).html("").append($("#PieChartSVG" + index_pie));
                 }
                 //});
+            });
+            var legenddata = ["VAST", "SciVis", "InfoVis"];
+            var legend = svg.selectAll(".legend")
+                .data(legenddata)
+                .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function (d, i) {
+                return "translate(0," + i * 20 + ")";
+            });
+            legend.append("text")
+                .attr("x", this.width - 200)
+                .attr("y", -225)
+                .attr("dy", ".35em")
+                .style("text-anchor", "end")
+                .text(function (d) {
+                return d;
             });
             /* zoom behavior with buttons*/
             var zoom = d3.behavior.zoom()

@@ -122,6 +122,7 @@ module Chart {
                     // 添加path元素，并通过line()计算出值来赋值
                     conference.append("path")
                         .attr("class", "line")
+                        .attr("clip-path", "url(#clip)")
                         .attr("d", function(d) { return line(d.values); })
                         .style("stroke", function(d) { return zScale(d.name); })
                         .attr("fill","none");
@@ -150,6 +151,14 @@ module Chart {
 
 
                     // //////
+                    var clip = g.append("defs").append("svg:clipPath")
+                        .attr("id", "clip")
+                        .append("svg:rect")
+                        .attr("id", "clip-rect")
+                        .attr("x", "0")
+                        .attr("y", "0")
+                        .attr("width", width)
+                        .attr("height", height);
 
                     $( "#slider-range" ).slider({
                         range: true,
