@@ -55,6 +55,8 @@ module Chart {
             //.on("zoom", zoomed);
 
             index++;
+
+
             var svg = d3.select("body").append("svg").attr('id','svgStack'+index)
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
@@ -67,6 +69,10 @@ module Chart {
 
             d3.csv("../data/Line_Stack.csv", function (error: any, data: any) {
 
+                if (index > 1) {
+                    var dex = index - 1;
+                    $("#svgStack" + dex).html("").append($("#svgStack" + index))
+                }
 
                 color.domain(d3.keys(data[0]).filter(function (key) {
                     return key !== "year";
@@ -179,10 +185,7 @@ module Chart {
                         return d;
                     });
 
-                if (index > 1) {
-                    var dex = index - 1;
-                    $("#svgStack" + dex).html("").append($("#svgStack" + index))
-                }
+
 
             });
 

@@ -335,10 +335,12 @@ function Search(i){
 	}
 	if(window.stackChartName.indexOf(searchVal)> -1){
 		var selectStack =d3.select("#svgStack1").selectAll('rect.stack-'+searchVal);
+
 		d3.select("#svgStack1").selectAll('rect.stack-path').style('fill;',function(){
 			return d3.select(this).attr('data-fill');
 		});
-		selectStack.style('fill','red');
+		selectStack.style('outline','solid red');
+
 	}
 	if(window.tagCloudName.indexOf(searchVal)> -1){
 		var selectTag =d3.select(".wordcloud").selectAll('text.tag-'+searchVal);

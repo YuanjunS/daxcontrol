@@ -44,6 +44,10 @@ var Chart;
                 svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
             }));
             d3.csv("../data/Line_Stack.csv", function (error, data) {
+                if (index > 1) {
+                    var dex = index - 1;
+                    $("#svgStack" + dex).html("").append($("#svgStack" + index));
+                }
                 color.domain(d3.keys(data[0]).filter(function (key) {
                     return key !== "year";
                 }));
@@ -133,10 +137,6 @@ var Chart;
                     .text(function (d) {
                     return d;
                 });
-                if (index > 1) {
-                    var dex = index - 1;
-                    $("#svgStack" + dex).html("").append($("#svgStack" + index));
-                }
             });
             var zoom = d3.behavior.zoom()
                 .scaleExtent([1, 8])
