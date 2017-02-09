@@ -101,6 +101,7 @@ var Chart;
                 })
                     .attr("x", 3)
                     .attr("dy", ".35em")
+                    .style("stroke", function (d) { return zScale(d.name); })
                     .text(function (d) { return d.name; });
                 // 添加点
                 /*conference.selectAll("circle")

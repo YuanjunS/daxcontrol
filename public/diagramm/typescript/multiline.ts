@@ -133,6 +133,7 @@ module Chart {
                         })
                         .attr("x", 3)
                         .attr("dy", ".35em")
+                        .style("stroke", function(d) { return zScale(d.name); })
                         .text(function(d) { return d.name });
                     // 添加点
                     /*conference.selectAll("circle")
@@ -151,6 +152,8 @@ module Chart {
 
 
                     // //////
+
+
                     var clip = g.append("defs").append("svg:clipPath")
                         .attr("id", "clip")
                         .append("svg:rect")
