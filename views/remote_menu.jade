@@ -6,14 +6,14 @@ block content
 
     .wrapper
 
-        .container
-            h2 DaXControl
+        .container(style='transform:scale(0.8);height:15%')
+            h2(style='font-size:60px') DaXControl
             | &#x9;&#x9;&#x9;
-            .btn-group.btn-group-justified(role='group', aria-label='...',style='transform:translate(0px,50px);width:60%')
+            .btn-group.btn-group-justified(role='group', aria-label='...',style='transform:translate(0px,60px);width:60%')
                 .btn-group(role='group')
                 .btn-group(role='group')
                 .btn-group(role='group')
-                    button#stackbutton.btn.btn-default(type='button',onclick="menuWechseln('stack_button')",style='color: #996633;padding:50px 100px;font-size:30px;') Stack
+                    button#stackbutton.btn.btn-default(type='button',onclick="menuWechseln('stack_button')",style='color: #996633;padding:50px 100px;font-size:30px;transform:translateX(-100px);') Stack
                 //.btn-group(role='group')
                 //    button#multibutton.btn.btn-default(type='button',onclick="menuWechseln('multi_button')",style='color: #006633;') Line
                 .btn-group(role='group')
@@ -21,13 +21,13 @@ block content
                 .btn-group(role='group')
                     button#piebutton.btn.btn-default(type='button',onclick="menuWechseln('pie_button')",style='color: #336699;padding:50px 100px;font-size:30px;') Pie
                 //.btn-group(role='group')
-                //    button#cloudbutton.btn.btn-default(type='button',onclick="menuWechseln('cloud_button')",style='color: #CC3333;') Cloud
-            .btn-group.btn-group-justified(role='group', aria-label='...',style='transform:translate(0px,100px);width:60%')
+                   //button#cloudbutton.btn.btn-default(type='button',onclick="menuWechseln('cloud_button')",style='color: #CC3333;') Cloud
+            .btn-group.btn-group-justified(role='group', aria-label='...',style='transform:translate(0px,90px);width:60%')
                 .btn-group(role='group')
                 .btn-group(role='group')
                 //    button#stackbutton.btn.btn-default(type='button',onclick="menuWechseln('stack_button')",style='color: #996633;padding:30px 40px;') Stack
                 .btn-group(role='group')
-                    button#multibutton.btn.btn-default(type='button',onclick="menuWechseln('multi_button')",style='color: #006633;padding:50px 100px;font-size:30px;') Line
+                    button#multibutton.btn.btn-default(type='button',onclick="menuWechseln('multi_button')",style='color: #006633;padding:50px 100px;font-size:30px;transform:translateX(-100px);') Line
                 .btn-group(role='group')
                     button#nullbutton1.btn.btn-default(type='button',style='display:none') null
                 //.btn-group(role='group')
@@ -35,7 +35,7 @@ block content
                 .btn-group(role='group')
                     button#cloudbutton.btn.btn-default(type='button',onclick="menuWechseln('cloud_button')",style='color: #CC3333;padding:50px 100px;font-size:30px;') Cloud
 
-            #Menu.container1(style='transform:translate(-50px,300px)')
+            #Menu.container1(style='transform:translate(0px,275px)')
 
                 //
                     button#piebutton.piebutton(onclick="menuWechseln('pie_button')") Pie
