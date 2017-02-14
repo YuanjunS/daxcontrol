@@ -6,9 +6,11 @@ import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
 import {indexRouter} from "./routes/index";
 import userRouter from "./routes/users";
+import * as socketio from"socket.io";
 
 export let app = express();
-
+export let port = process.env.PORT || 8080;
+export let io = socketio().listen(app.listen(port));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -32,6 +34,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', userRouter);
 
+io.on("connection",function(socket){
+
+  // socket.broadcast.emit('welcome', data);
+  socket.on('pie_reset1', function (data) {
+    console.log(data.message);
+    socket.broadcast.emit('pie_reset2',data.message);
+    socket.emit('pie_reset2', data.message);
+  });
+  // socket.broadcast.emit('welcome',{message:'Welcome!',id:socket.id});
+
+  socket.on('i am a client',function(data){
+    console.log(data);
+
+  });
+});
 // catch 404 and forward to error handler
 this.app.use(function (req, res, next) {
   let err: any = new Error('Not Found');
@@ -62,6 +79,7 @@ this.app.use(function (err: any, req, res, next) {
     error: {}
   });
 });
+
 
 
 export default app;

@@ -6,7 +6,10 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var index_1 = require("./routes/index");
 var users_1 = require("./routes/users");
+var socketio = require("socket.io");
 exports.app = express();
+exports.port = process.env.PORT || 8080;
+exports.io = socketio().listen(exports.app.listen(exports.port));
 // view engine setup
 exports.app.set('views', path.join(__dirname, 'views'));
 exports.app.set('view engine', 'jade');
@@ -28,6 +31,18 @@ exports.app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.static(path.join(__dirname,'diagramm')));
 exports.app.use('/', index_1.indexRouter);
 exports.app.use('/users', users_1.default);
+exports.io.on("connection", function (socket) {
+    // socket.broadcast.emit('welcome', data);
+    socket.on('pie_reset1', function (data) {
+        console.log(data.message);
+        socket.broadcast.emit('pie_reset2', data.message);
+        socket.emit('pie_reset2', data.message);
+    });
+    // socket.broadcast.emit('welcome',{message:'Welcome!',id:socket.id});
+    socket.on('i am a client', function (data) {
+        console.log(data);
+    });
+});
 // catch 404 and forward to error handler
 this.app.use(function (req, res, next) {
     var err = new Error('Not Found');
